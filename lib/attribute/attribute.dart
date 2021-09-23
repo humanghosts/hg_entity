@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:hg_entity/status/status.dart';
+
 import 'listener/listener.dart';
 
 class Attribute<T> {
@@ -18,6 +20,12 @@ class Attribute<T> {
   /// 监听器
   late final AttributeListener<T>? _listener;
 
+  /// 字段状态
+  DataStatus _status = DataStatus.none;
+
+  /// 字段状态修改，修改模型状态
+  late final void Function(Attribute attribute, DataStatus status) _onStatusChange;
+
   /// 构造方法:
   /// [name] 字段名称;
   /// [title] 字段标题,为空使用[name]的值;
@@ -27,12 +35,14 @@ class Attribute<T> {
     required String title,
     T? dvalue,
     AttributeListener<T>? listener,
+    required void Function(Attribute attribute, DataStatus oldStatus) onStatusChange,
   }) {
     _name = name;
     _title = title;
     _dvalue = dvalue;
     if (null != dvalue) _value = dvalue;
     _listener = listener;
+    _onStatusChange = onStatusChange;
   }
 
   /// 获取字段值
@@ -57,6 +67,18 @@ class Attribute<T> {
   T get cvalue => json.decode(json.encode(value));
 
   AttributeListener<T>? get listener => _listener;
+
+  DataStatus get status => _status;
+
+  void Function(Attribute attribute, DataStatus oldStatus) get onStatusChange => _onStatusChange;
+
+  void changeStatus({DataStatus newStatus = DataStatus.update}) {
+    DataStatus oldStatus = _status;
+    if (oldStatus != newStatus) {
+      _status = newStatus;
+      onStatusChange(this, oldStatus);
+    }
+  }
 
   /// 设置字段值
   set value(T value) {

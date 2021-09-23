@@ -1,4 +1,5 @@
 import 'package:hg_entity/attribute/listener/listener.dart';
+import 'package:hg_entity/status/status.dart';
 
 import 'attribute.dart';
 import 'attribute_list.dart';
@@ -26,7 +27,14 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
     required this.mvalue,
     T? dvalue,
     AttributeListener<T>? listener,
-  }) : super(name: name, title: title, dvalue: dvalue, listener: listener);
+    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+  }) : super(
+          name: name,
+          title: title,
+          dvalue: dvalue,
+          listener: listener,
+          onStatusChange: onStatusChange,
+        );
 
   @override
   bool get isNull => value == null || value!.isNull;
@@ -44,7 +52,14 @@ class ListCustomAttribute<T extends CustomValue> extends ListAttribute<T> {
     required this.mvalue,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-  }) : super(name: name, title: title, dvalue: dvalue ?? [], listener: listener);
+    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+  }) : super(
+          name: name,
+          title: title,
+          dvalue: dvalue ?? [],
+          listener: listener,
+          onStatusChange: onStatusChange,
+        );
 
   @override
   List<T> get cvalue {

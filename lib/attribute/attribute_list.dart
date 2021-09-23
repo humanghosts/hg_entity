@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hg_entity/attribute/listener/listener.dart';
+import 'package:hg_entity/status/status.dart';
 
 import 'attribute.dart';
 
@@ -12,11 +13,13 @@ class ListAttribute<T> extends Attribute<List<T>> {
     required String title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
+    required void Function(Attribute attribute, DataStatus status) onStatusChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
+          onStatusChange: onStatusChange,
         );
 
   /// 属性类型,List内的泛型
@@ -39,6 +42,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.add(value);
+      changeStatus();
       return;
     }
     Function(T value)? beforeAppendValue = lis.beforeAppendValue;
@@ -46,6 +50,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
       return;
     }
     this.value.add(value);
+    changeStatus();
     lis.afterAppendValue?.call(value);
   }
 
@@ -62,6 +67,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.remove(value);
+      changeStatus();
       return;
     }
     Function(T value)? beforeRemoveValue = lis.beforeRemoveValue;
@@ -69,6 +75,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
       return;
     }
     this.value.remove(value);
+    changeStatus();
     lis.afterRemoveValue?.call(value);
   }
 

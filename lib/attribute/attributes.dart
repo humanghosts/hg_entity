@@ -3,6 +3,7 @@ import 'package:hg_entity/attribute/listener/listener.dart';
 import 'package:hg_entity/model/data_model.dart';
 import 'package:hg_entity/model/data_tree_model.dart';
 import 'package:hg_entity/model/simple_model.dart';
+import 'package:hg_entity/status/status.dart';
 
 import 'attribute.dart';
 import 'attribute_list.dart';
@@ -10,6 +11,10 @@ import 'attribute_list.dart';
 class Attributes {
   /// 名称:属性 映射
   final Map<String, Attribute> _attributeMap = {};
+
+  final void Function(Attribute attribute, DataStatus oldStatus) _onStatusChange;
+
+  Attributes({required void Function(Attribute attribute, DataStatus oldStatus) onStatusChange}) : _onStatusChange = onStatusChange;
 
   /// 通过名称获取某个属性
   Attribute? get(String? name) => _attributeMap[name];
@@ -24,7 +29,13 @@ class Attributes {
     required num dvalue,
     AttributeListener<num>? listener,
   }) {
-    Attribute<num> attr = Attribute<num>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<num> attr = Attribute<num>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -36,7 +47,13 @@ class Attributes {
     num? dvalue,
     AttributeListener<num?>? listener,
   }) {
-    Attribute<num?> attr = Attribute<num?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<num?> attr = Attribute<num?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -48,7 +65,13 @@ class Attributes {
     required int dvalue,
     AttributeListener<int>? listener,
   }) {
-    Attribute<int> attr = Attribute<int>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<int> attr = Attribute<int>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -60,7 +83,13 @@ class Attributes {
     int? dvalue,
     AttributeListener<int?>? listener,
   }) {
-    Attribute<int?> attr = Attribute<int?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<int?> attr = Attribute<int?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -72,7 +101,13 @@ class Attributes {
     required double dvalue,
     AttributeListener<double>? listener,
   }) {
-    Attribute<double> attr = Attribute<double>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<double> attr = Attribute<double>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -84,7 +119,13 @@ class Attributes {
     double? dvalue,
     AttributeListener<double?>? listener,
   }) {
-    Attribute<double?> attr = Attribute<double?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<double?> attr = Attribute<double?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -96,7 +137,13 @@ class Attributes {
     required String dvalue,
     AttributeListener<String>? listener,
   }) {
-    Attribute<String> attr = Attribute<String>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<String> attr = Attribute<String>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -108,7 +155,13 @@ class Attributes {
     String? dvalue,
     AttributeListener<String?>? listener,
   }) {
-    Attribute<String?> attr = Attribute<String?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<String?> attr = Attribute<String?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -120,7 +173,13 @@ class Attributes {
     required bool dvalue,
     AttributeListener<bool>? listener,
   }) {
-    Attribute<bool> attr = Attribute<bool>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<bool> attr = Attribute<bool>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -132,7 +191,13 @@ class Attributes {
     bool? dvalue,
     AttributeListener<bool?>? listener,
   }) {
-    Attribute<bool?> attr = Attribute<bool?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<bool?> attr = Attribute<bool?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -144,7 +209,13 @@ class Attributes {
     required DateTime dvalue,
     AttributeListener<DateTime>? listener,
   }) {
-    Attribute<DateTime> attr = Attribute<DateTime>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<DateTime> attr = Attribute<DateTime>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -156,7 +227,13 @@ class Attributes {
     DateTime? dvalue,
     AttributeListener<DateTime?>? listener,
   }) {
-    Attribute<DateTime?> attr = Attribute<DateTime?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<DateTime?> attr = Attribute<DateTime?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -168,7 +245,13 @@ class Attributes {
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
-    Attribute<T> attr = Attribute<T>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<T> attr = Attribute<T>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -180,7 +263,13 @@ class Attributes {
     T? dvalue,
     AttributeListener<T?>? listener,
   }) {
-    Attribute<T?> attr = Attribute<T?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<T?> attr = Attribute<T?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -192,7 +281,13 @@ class Attributes {
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
-    Attribute<T> attr = Attribute<T>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<T> attr = Attribute<T>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -204,7 +299,13 @@ class Attributes {
     T? dvalue,
     AttributeListener<T?>? listener,
   }) {
-    Attribute<T?> attr = Attribute<T?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<T?> attr = Attribute<T?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -216,7 +317,13 @@ class Attributes {
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
-    Attribute<T> attr = Attribute<T>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<T> attr = Attribute<T>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -228,7 +335,13 @@ class Attributes {
     T? dvalue,
     AttributeListener<T?>? listener,
   }) {
-    Attribute<T?> attr = Attribute<T?>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    Attribute<T?> attr = Attribute<T?>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -241,7 +354,14 @@ class Attributes {
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
-    CustomAttribute<T> attr = CustomAttribute<T>(name: name, title: title ?? name, mvalue: mvalue, dvalue: dvalue, listener: listener);
+    CustomAttribute<T> attr = CustomAttribute<T>(
+      name: name,
+      title: title ?? name,
+      mvalue: mvalue,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -254,7 +374,14 @@ class Attributes {
     T? dvalue,
     AttributeListener<T?>? listener,
   }) {
-    CustomAttribute<T?> attr = CustomAttribute<T?>(name: name, title: title ?? name, mvalue: mvalue, dvalue: dvalue, listener: listener);
+    CustomAttribute<T?> attr = CustomAttribute<T?>(
+      name: name,
+      title: title ?? name,
+      mvalue: mvalue,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -266,7 +393,13 @@ class Attributes {
     List<num>? dvalue,
     ListAttributeListener<num>? listener,
   }) {
-    ListAttribute<num> attr = ListAttribute<num>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<num> attr = ListAttribute<num>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -278,7 +411,13 @@ class Attributes {
     List<int>? dvalue,
     ListAttributeListener<int>? listener,
   }) {
-    ListAttribute<int> attr = ListAttribute<int>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<int> attr = ListAttribute<int>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -290,7 +429,13 @@ class Attributes {
     List<double>? dvalue,
     ListAttributeListener<double>? listener,
   }) {
-    ListAttribute<double> attr = ListAttribute<double>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<double> attr = ListAttribute<double>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -302,7 +447,13 @@ class Attributes {
     List<String>? dvalue,
     ListAttributeListener<String>? listener,
   }) {
-    ListAttribute<String> attr = ListAttribute<String>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<String> attr = ListAttribute<String>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -314,7 +465,13 @@ class Attributes {
     List<bool>? dvalue,
     ListAttributeListener<bool>? listener,
   }) {
-    ListAttribute<bool> attr = ListAttribute<bool>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<bool> attr = ListAttribute<bool>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -326,7 +483,13 @@ class Attributes {
     List<DateTime>? dvalue,
     ListAttributeListener<DateTime>? listener,
   }) {
-    ListAttribute<DateTime> attr = ListAttribute<DateTime>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<DateTime> attr = ListAttribute<DateTime>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -338,7 +501,13 @@ class Attributes {
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListAttribute<T> attr = ListAttribute<T>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<T> attr = ListAttribute<T>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -350,7 +519,13 @@ class Attributes {
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListAttribute<T> attr = ListAttribute<T>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<T> attr = ListAttribute<T>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -362,7 +537,13 @@ class Attributes {
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListAttribute<T> attr = ListAttribute<T>(name: name, title: title ?? name, dvalue: dvalue, listener: listener);
+    ListAttribute<T> attr = ListAttribute<T>(
+      name: name,
+      title: title ?? name,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
@@ -375,7 +556,14 @@ class Attributes {
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListCustomAttribute<T> attr = ListCustomAttribute<T>(name: name, title: title ?? name, mvalue: mvalue, dvalue: dvalue, listener: listener);
+    ListCustomAttribute<T> attr = ListCustomAttribute<T>(
+      name: name,
+      title: title ?? name,
+      mvalue: mvalue,
+      dvalue: dvalue,
+      listener: listener,
+      onStatusChange: _onStatusChange,
+    );
     _attributeMap[name] = attr;
     return attr;
   }
