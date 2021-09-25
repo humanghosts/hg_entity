@@ -17,3 +17,11 @@
 ## 0.0.5
 
 * add DataStatus
+
+## 0.0.6
+
+* change simple model
+
+## 0.0.7
+
+* change custom value

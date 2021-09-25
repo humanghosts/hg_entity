@@ -12,9 +12,9 @@ abstract class CustomValue {
 
   void merge(CustomValue value);
 
-  Map? toMap();
+  Object? toMap();
 
-  void fromMap(Map value);
+  void fromMap(Object value);
 }
 
 /// 自定义类型的属性
