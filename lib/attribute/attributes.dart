@@ -7,6 +7,7 @@ import 'package:hg_entity/status/status.dart';
 
 import 'attribute.dart';
 import 'attribute_list.dart';
+import 'attribute_model.dart';
 
 class Attributes {
   /// 名称:属性 映射
@@ -239,13 +240,13 @@ class Attributes {
   }
 
   /// 数据模型字段
-  Attribute<T> dataModel<T extends DataModel>({
+  DataModelAttribute<T> dataModel<T extends DataModel>({
     required String name,
     String? title,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
-    Attribute<T> attr = Attribute<T>(
+    DataModelAttribute<T> attr = DataModelAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -257,13 +258,13 @@ class Attributes {
   }
 
   /// 数据模型字段(值可空)
-  Attribute<T?> dataModelNullable<T extends DataModel>({
+  DataModelAttribute<T> dataModelNullable<T extends DataModel?>({
     required String name,
     String? title,
     T? dvalue,
-    AttributeListener<T?>? listener,
+    AttributeListener<T>? listener,
   }) {
-    Attribute<T?> attr = Attribute<T?>(
+    DataModelAttribute<T> attr = DataModelAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -275,13 +276,13 @@ class Attributes {
   }
 
   /// 树形数据模型
-  Attribute<T> dataTreeModel<T extends DataTreeModel>({
+  DataTreeModelAttribute<T> dataTreeModel<T extends DataTreeModel>({
     required String name,
     String? title,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
-    Attribute<T> attr = Attribute<T>(
+    DataTreeModelAttribute<T> attr = DataTreeModelAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -293,13 +294,13 @@ class Attributes {
   }
 
   /// 树形数据模型(值可空)
-  Attribute<T?> dataTreeModelNullable<T extends DataTreeModel>({
+  DataTreeModelAttribute<T> dataTreeModelNullable<T extends DataTreeModel?>({
     required String name,
     String? title,
     T? dvalue,
-    AttributeListener<T?>? listener,
+    AttributeListener<T>? listener,
   }) {
-    Attribute<T?> attr = Attribute<T?>(
+    DataTreeModelAttribute<T> attr = DataTreeModelAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -311,13 +312,13 @@ class Attributes {
   }
 
   /// 简单模型
-  Attribute<T> simpleModel<T extends SimpleModel>({
+  SimpleModelAttribute<T> simpleModel<T extends SimpleModel>({
     required String name,
     String? title,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
-    Attribute<T> attr = Attribute<T>(
+    SimpleModelAttribute<T> attr = SimpleModelAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -329,13 +330,13 @@ class Attributes {
   }
 
   /// 简单模型(值可空)
-  Attribute<T?> simpleModelNullable<T extends SimpleModel>({
+  SimpleModelAttribute<T> simpleModelNullable<T extends SimpleModel?>({
     required String name,
     String? title,
     T? dvalue,
-    AttributeListener<T?>? listener,
+    AttributeListener<T>? listener,
   }) {
-    Attribute<T?> attr = Attribute<T?>(
+    SimpleModelAttribute<T> attr = SimpleModelAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -347,7 +348,7 @@ class Attributes {
   }
 
   /// 自定义
-  CustomAttribute<T> custom<T extends CustomValue?>({
+  CustomAttribute<T> custom<T extends CustomValue>({
     required String name,
     String? title,
     required T mvalue,
@@ -367,14 +368,14 @@ class Attributes {
   }
 
   /// 自定义(值可空)
-  CustomAttribute<T?> customNullable<T extends CustomValue?>({
+  CustomAttribute<T> customNullable<T extends CustomValue?>({
     required String name,
     String? title,
     required T mvalue,
     T? dvalue,
-    AttributeListener<T?>? listener,
+    AttributeListener<T>? listener,
   }) {
-    CustomAttribute<T?> attr = CustomAttribute<T?>(
+    CustomAttribute<T> attr = CustomAttribute<T>(
       name: name,
       title: title ?? name,
       mvalue: mvalue,
@@ -477,13 +478,13 @@ class Attributes {
   }
 
   /// 日期时间字段
-  ListAttribute<DateTime> datetimeList({
+  DateTimeListAttribute datetimeList({
     required String name,
     String? title,
     List<DateTime>? dvalue,
     ListAttributeListener<DateTime>? listener,
   }) {
-    ListAttribute<DateTime> attr = ListAttribute<DateTime>(
+    DateTimeListAttribute attr = DateTimeListAttribute(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -495,13 +496,13 @@ class Attributes {
   }
 
   /// 数据模型字段
-  ListAttribute<T> dataModelList<T extends DataModel>({
+  DataModelListAttribute<T> dataModelList<T extends DataModel>({
     required String name,
     String? title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListAttribute<T> attr = ListAttribute<T>(
+    DataModelListAttribute<T> attr = DataModelListAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -513,13 +514,13 @@ class Attributes {
   }
 
   /// 树形数据模型
-  ListAttribute<T> dataTreeModelList<T extends DataTreeModel>({
+  DataTreeModelListAttribute<T> dataTreeModelList<T extends DataTreeModel>({
     required String name,
     String? title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListAttribute<T> attr = ListAttribute<T>(
+    DataTreeModelListAttribute<T> attr = DataTreeModelListAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -531,13 +532,13 @@ class Attributes {
   }
 
   /// 简单模型
-  ListAttribute<T> simpleModelList<T extends SimpleModel>({
+  SimpleModelListAttribute<T> simpleModelList<T extends SimpleModel>({
     required String name,
     String? title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListAttribute<T> attr = ListAttribute<T>(
+    SimpleModelListAttribute<T> attr = SimpleModelListAttribute<T>(
       name: name,
       title: title ?? name,
       dvalue: dvalue,
@@ -549,14 +550,14 @@ class Attributes {
   }
 
   /// 自定义数据类型
-  ListCustomAttribute<T> customList<T extends CustomValue>({
+  CustomListAttribute<T> customList<T extends CustomValue>({
     required String name,
     String? title,
     required T mvalue,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
-    ListCustomAttribute<T> attr = ListCustomAttribute<T>(
+    CustomListAttribute<T> attr = CustomListAttribute<T>(
       name: name,
       title: title ?? name,
       mvalue: mvalue,

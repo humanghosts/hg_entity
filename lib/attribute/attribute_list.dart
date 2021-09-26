@@ -85,3 +85,19 @@ class ListAttribute<T> extends Attribute<List<T>> {
     }
   }
 }
+
+class DateTimeListAttribute extends ListAttribute<DateTime> {
+  DateTimeListAttribute({
+    required String name,
+    required String title,
+    List<DateTime>? dvalue,
+    ListAttributeListener<DateTime>? listener,
+    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+  }) : super(
+          name: name,
+          title: title,
+          dvalue: dvalue ?? [],
+          listener: listener,
+          onStatusChange: onStatusChange,
+        );
+}

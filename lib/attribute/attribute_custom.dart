@@ -43,10 +43,10 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
   T get cvalue => value?.clone() as T;
 }
 
-class ListCustomAttribute<T extends CustomValue> extends ListAttribute<T> {
+class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
   T mvalue;
 
-  ListCustomAttribute({
+  CustomListAttribute({
     required String name,
     required String title,
     required this.mvalue,
