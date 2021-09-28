@@ -1,8 +1,8 @@
-import 'package:hg_entity/attribute/listener/listener.dart';
-import 'package:hg_entity/hg_entity.dart';
-import 'package:hg_entity/status/status.dart';
-
+import '../model/export.dart';
 import 'attribute.dart';
+import 'attribute_list.dart';
+import 'listener/listener.dart';
+import 'status.dart';
 
 class ModelAttribute<T extends Model?> extends Attribute<T> {
   ModelAttribute({

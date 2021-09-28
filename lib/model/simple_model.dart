@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:hg_entity/attribute/attribute.dart';
-
+import '../attribute/export.dart';
 import 'model.dart';
 
 abstract class SimpleModel extends Model {

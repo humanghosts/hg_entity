@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:hg_entity/attribute/listener/listener.dart';
-import 'package:hg_entity/status/status.dart';
-
 import 'attribute.dart';
+import 'listener/listener.dart';
+import 'status.dart';
 
 /// 列表类型的属性
 class ListAttribute<T> extends Attribute<List<T>> {

@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:hg_entity/status/status.dart';
-
 import 'listener/listener.dart';
+import 'status.dart';
 
 class Attribute<T> {
   /// 字段值

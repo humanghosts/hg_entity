@@ -1,8 +1,6 @@
-import 'package:hg_entity/attribute/attribute.dart';
-import 'package:hg_entity/attribute/attribute_list.dart';
-import 'package:hg_entity/attribute/listener/listener.dart';
-import 'package:hg_entity/model/data_model.dart';
-import 'package:hg_entity/util/path_utils.dart';
+import '../attribute/export.dart';
+import '../util/export.dart';
+import 'data_model.dart';
 
 abstract class DataTreeModel extends DataModel {
   late final Attribute<String> path;

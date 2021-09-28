@@ -1,13 +1,10 @@
-import 'package:hg_entity/attribute/attribute_custom.dart';
-import 'package:hg_entity/attribute/listener/listener.dart';
-import 'package:hg_entity/model/data_model.dart';
-import 'package:hg_entity/model/data_tree_model.dart';
-import 'package:hg_entity/model/simple_model.dart';
-import 'package:hg_entity/status/status.dart';
-
+import '../model/export.dart';
 import 'attribute.dart';
+import 'attribute_custom.dart';
 import 'attribute_list.dart';
 import 'attribute_model.dart';
+import 'listener/listener.dart';
+import 'status.dart';
 
 class Attributes {
   /// 名称:属性 映射

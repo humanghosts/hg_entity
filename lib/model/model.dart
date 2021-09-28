@@ -1,6 +1,4 @@
-import 'package:hg_entity/attribute/attribute.dart';
-import 'package:hg_entity/attribute/attributes.dart';
-import 'package:hg_entity/status/status.dart';
+import '../attribute/export.dart';
 
 abstract class Model {
   late final Attributes attributes;

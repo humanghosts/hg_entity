@@ -1,8 +1,7 @@
-import 'package:hg_entity/attribute/listener/listener.dart';
-import 'package:hg_entity/status/status.dart';
-
 import 'attribute.dart';
 import 'attribute_list.dart';
+import 'listener/listener.dart';
+import 'status.dart';
 
 /// 自定义attribute的value
 abstract class CustomValue {
