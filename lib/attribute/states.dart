@@ -1,4 +1,4 @@
-enum DataStatus {
+enum States {
   /// 新增
   insert,
 

@@ -1,18 +1,21 @@
+import 'package:hg_entity/attribute/export.dart';
+
 import '../model/export.dart';
 import 'attribute.dart';
 import 'attribute_custom.dart';
 import 'attribute_list.dart';
 import 'attribute_model.dart';
 import 'listener/listener.dart';
-import 'status.dart';
+import 'states.dart';
 
 class Attributes {
   /// 名称:属性 映射
   final Map<String, Attribute> _attributeMap = {};
 
-  final void Function(Attribute attribute, DataStatus oldStatus) _onStatusChange;
+  final void Function(Attribute attribute, States oldState) _onStateChange;
 
-  Attributes({required void Function(Attribute attribute, DataStatus oldStatus) onStatusChange}) : _onStatusChange = onStatusChange;
+  Attributes({required void Function(Attribute attribute, States oldState) onStateChange})
+      : _onStateChange = onStateChange;
 
   /// 通过名称获取某个属性
   Attribute? get(String? name) => _attributeMap[name];
@@ -32,7 +35,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -50,7 +53,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -68,7 +71,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -86,7 +89,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -104,7 +107,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -122,7 +125,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -140,7 +143,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -158,7 +161,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -176,7 +179,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -194,7 +197,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -212,7 +215,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -230,7 +233,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -248,7 +251,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -266,7 +269,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -284,7 +287,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -302,7 +305,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -320,7 +323,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -338,7 +341,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -358,7 +361,7 @@ class Attributes {
       mvalue: mvalue,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -378,7 +381,7 @@ class Attributes {
       mvalue: mvalue,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -396,7 +399,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -414,7 +417,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -432,7 +435,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -450,7 +453,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -468,7 +471,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -486,7 +489,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -504,7 +507,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -522,7 +525,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -540,7 +543,7 @@ class Attributes {
       title: title ?? name,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;
@@ -560,7 +563,7 @@ class Attributes {
       mvalue: mvalue,
       dvalue: dvalue,
       listener: listener,
-      onStatusChange: _onStatusChange,
+      onStateChange: _onStateChange,
     );
     _attributeMap[name] = attr;
     return attr;

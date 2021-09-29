@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'listener/listener.dart';
-import 'status.dart';
+import 'states.dart';
 
 class Attribute<T> {
   /// 字段值
@@ -20,10 +20,10 @@ class Attribute<T> {
   late final AttributeListener<T>? _listener;
 
   /// 字段状态
-  DataStatus _status = DataStatus.none;
+  States _state = States.none;
 
   /// 字段状态修改，修改模型状态
-  late final void Function(Attribute attribute, DataStatus status) _onStatusChange;
+  late final void Function(Attribute attribute, States state) _onStateChange;
 
   /// 构造方法:
   /// [name] 字段名称;
@@ -34,14 +34,14 @@ class Attribute<T> {
     required String title,
     T? dvalue,
     AttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus oldStatus) onStatusChange,
+    required void Function(Attribute attribute, States oldState) onStateChange,
   }) {
     _name = name;
     _title = title;
     _dvalue = dvalue;
     if (null != dvalue) _value = dvalue;
     _listener = listener;
-    _onStatusChange = onStatusChange;
+    _onStateChange = onStateChange;
   }
 
   /// 获取字段值
@@ -67,15 +67,15 @@ class Attribute<T> {
 
   AttributeListener<T>? get listener => _listener;
 
-  DataStatus get status => _status;
+  States get state => _state;
 
-  void Function(Attribute attribute, DataStatus oldStatus) get onStatusChange => _onStatusChange;
+  void Function(Attribute attribute, States oldState) get onStateChange => _onStateChange;
 
-  void changeStatus({DataStatus newStatus = DataStatus.update}) {
-    DataStatus oldStatus = _status;
-    if (oldStatus != newStatus) {
-      _status = newStatus;
-      onStatusChange(this, oldStatus);
+  void changeState({States newState = States.update}) {
+    States oldState = _state;
+    if (oldState != newState) {
+      _state = newState;
+      onStateChange(this, oldState);
     }
   }
 

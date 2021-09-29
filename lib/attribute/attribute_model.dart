@@ -2,7 +2,7 @@ import '../model/export.dart';
 import 'attribute.dart';
 import 'attribute_list.dart';
 import 'listener/listener.dart';
-import 'status.dart';
+import 'states.dart';
 
 class ModelAttribute<T extends Model?> extends Attribute<T> {
   ModelAttribute({
@@ -10,13 +10,13 @@ class ModelAttribute<T extends Model?> extends Attribute<T> {
     required String title,
     T? dvalue,
     AttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue,
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 
   @override
@@ -29,13 +29,13 @@ class ModelListAttribute<T extends Model> extends ListAttribute<T> {
     required String title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 
   @override
@@ -51,13 +51,13 @@ class DataModelAttribute<T extends DataModel?> extends ModelAttribute<T> {
     required String title,
     T? dvalue,
     AttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue,
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 }
 
@@ -67,13 +67,13 @@ class DataModelListAttribute<T extends DataModel> extends ModelListAttribute<T> 
     required String title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 }
 
@@ -83,13 +83,13 @@ class DataTreeModelAttribute<T extends DataTreeModel?> extends DataModelAttribut
     required String title,
     T? dvalue,
     AttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue,
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 }
 
@@ -99,13 +99,13 @@ class DataTreeModelListAttribute<T extends DataTreeModel> extends DataModelListA
     required String title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 }
 
@@ -115,13 +115,13 @@ class SimpleModelAttribute<T extends SimpleModel?> extends ModelAttribute<T> {
     required String title,
     T? dvalue,
     AttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue,
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 }
 
@@ -131,12 +131,12 @@ class SimpleModelListAttribute<T extends SimpleModel> extends ModelListAttribute
     required String title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 }

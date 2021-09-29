@@ -1,7 +1,7 @@
 import 'attribute.dart';
 import 'attribute_list.dart';
 import 'listener/listener.dart';
-import 'status.dart';
+import 'states.dart';
 
 /// 自定义attribute的value
 abstract class CustomValue {
@@ -26,13 +26,13 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
     required this.mvalue,
     T? dvalue,
     AttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue,
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 
   @override
@@ -51,13 +51,13 @@ class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
     required this.mvalue,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 
   @override

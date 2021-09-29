@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'attribute.dart';
 import 'listener/listener.dart';
-import 'status.dart';
+import 'states.dart';
 
 /// 列表类型的属性
 class ListAttribute<T> extends Attribute<List<T>> {
@@ -12,13 +12,13 @@ class ListAttribute<T> extends Attribute<List<T>> {
     required String title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 
   /// 属性类型,List内的泛型
@@ -41,7 +41,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.add(value);
-      changeStatus();
+      changeState();
       return;
     }
     Function(T value)? beforeAppendValue = lis.beforeAppendValue;
@@ -49,7 +49,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
       return;
     }
     this.value.add(value);
-    changeStatus();
+    changeState();
     lis.afterAppendValue?.call(value);
   }
 
@@ -66,7 +66,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.remove(value);
-      changeStatus();
+      changeState();
       return;
     }
     Function(T value)? beforeRemoveValue = lis.beforeRemoveValue;
@@ -74,7 +74,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
       return;
     }
     this.value.remove(value);
-    changeStatus();
+    changeState();
     lis.afterRemoveValue?.call(value);
   }
 
@@ -91,12 +91,12 @@ class DateTimeListAttribute extends ListAttribute<DateTime> {
     required String title,
     List<DateTime>? dvalue,
     ListAttributeListener<DateTime>? listener,
-    required void Function(Attribute attribute, DataStatus status) onStatusChange,
+    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStatusChange: onStatusChange,
+          onStateChange: onStateChange,
         );
 }

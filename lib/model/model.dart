@@ -2,28 +2,28 @@ import '../attribute/export.dart';
 
 abstract class Model {
   late final Attributes attributes;
-  DataStatus _status = DataStatus.none;
+  States _state = States.none;
 
   Model() {
-    attributes = Attributes(onStatusChange: _onStatusChange);
+    attributes = Attributes(onStateChange: _onStateChange);
   }
 
-  DataStatus get status => _status;
+  States get state => _state;
 
-  void _onStatusChange(Attribute attribute, DataStatus oldStatus) {
-    // attribute 和 oldStatus 暂时用不到
-    DataStatus oldModelStatus = status;
-    if (oldModelStatus == DataStatus.query) {
-      _status = DataStatus.update;
+  void _onStateChange(Attribute attribute, States oldState) {
+    // attribute 和 oldState 暂时用不到
+    States oldModelState = state;
+    if (oldModelState == States.query) {
+      _state = States.update;
       return;
     }
-    if (oldModelStatus == DataStatus.none) {
-      _status = DataStatus.insert;
+    if (oldModelState == States.none) {
+      _state = States.insert;
     }
   }
 
   void markNeedRemove() {
-    _status = DataStatus.delete;
+    _state = States.delete;
   }
 
   void clear({bool reset = false});
