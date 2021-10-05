@@ -2,31 +2,42 @@ import '../attribute/export.dart';
 
 abstract class Model {
   late final Attributes attributes;
-  States _state = States.none;
+  States state = States.none;
 
   Model() {
-    attributes = Attributes(onStateChange: _onStateChange);
+    AttributesListener listener = AttributesListener(
+      onAttributeValueChange: onAttributeValueChange,
+      onListAttributeValueAdd: onListAttributeValueAdd,
+      onListAttributeValueRemove: onListAttributeValueRemove,
+    );
+    attributes = Attributes(listener: listener);
   }
 
-  States get state => _state;
-
-  void _onStateChange(Attribute attribute, States oldState) {
-    // attribute 和 oldState 暂时用不到
+  void _changeState() {
     States oldModelState = state;
     if (oldModelState == States.query) {
-      _state = States.update;
-      return;
+      state = States.update;
     }
     if (oldModelState == States.none) {
-      _state = States.insert;
+      state = States.insert;
     }
   }
 
-  void markNeedRemove() {
-    _state = States.delete;
+  void onAttributeValueChange(Attribute attribute, Object? oldValue, Object? newValue) {
+    _changeState();
   }
 
-  void clear({bool reset = false});
+  void onListAttributeValueAdd(Attribute attribute, Object value) {
+    _changeState();
+  }
+
+  void onListAttributeValueRemove(Attribute attribute, Object value) {
+    _changeState();
+  }
+
+  void clear({bool reset = false}) {
+    state = States.none;
+  }
 
   void merge(Model model);
 

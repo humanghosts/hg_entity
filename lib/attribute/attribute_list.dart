@@ -1,24 +1,24 @@
 import 'dart:convert';
 
 import 'attribute.dart';
-import 'listener/listener.dart';
-import 'states.dart';
+import 'attributes.dart';
+import 'listener.dart';
 
 /// 列表类型的属性
 class ListAttribute<T> extends Attribute<List<T>> {
   /// [dValue]为null会赋默认值空数组
   ListAttribute({
+    required Attributes parent,
     required String name,
     required String title,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
-    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
+          parent: parent,
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStateChange: onStateChange,
         );
 
   /// 属性类型,List内的泛型
@@ -41,7 +41,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.add(value);
-      changeState();
+      parent.listener?.onListAttributeValueAdd?.call(this, value);
       return;
     }
     Function(T value)? beforeAppendValue = lis.beforeAppendValue;
@@ -49,8 +49,8 @@ class ListAttribute<T> extends Attribute<List<T>> {
       return;
     }
     this.value.add(value);
-    changeState();
     lis.afterAppendValue?.call(value);
+    parent.listener?.onListAttributeValueAdd?.call(this, value);
   }
 
   void appendAll(List<T> valueList) {
@@ -66,7 +66,8 @@ class ListAttribute<T> extends Attribute<List<T>> {
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.remove(value);
-      changeState();
+      parent.listener?.onListAttributeValueRemove?.call(this, value);
+
       return;
     }
     Function(T value)? beforeRemoveValue = lis.beforeRemoveValue;
@@ -74,8 +75,8 @@ class ListAttribute<T> extends Attribute<List<T>> {
       return;
     }
     this.value.remove(value);
-    changeState();
     lis.afterRemoveValue?.call(value);
+    parent.listener?.onListAttributeValueRemove?.call(this, value);
   }
 
   void removeAll(List<T> valueList) {
@@ -87,16 +88,16 @@ class ListAttribute<T> extends Attribute<List<T>> {
 
 class DateTimeListAttribute extends ListAttribute<DateTime> {
   DateTimeListAttribute({
+    required Attributes parent,
     required String name,
     required String title,
     List<DateTime>? dvalue,
     ListAttributeListener<DateTime>? listener,
-    required void Function(Attribute attribute, States state) onStateChange,
   }) : super(
+          parent: parent,
           name: name,
           title: title,
           dvalue: dvalue ?? [],
           listener: listener,
-          onStateChange: onStateChange,
         );
 }

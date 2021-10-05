@@ -55,6 +55,7 @@ abstract class DataModel extends Model {
 
   @override
   void clear({bool reset = false, bool clearBase = false}) {
+    super.clear();
     for (Attribute attr in attributes.list) {
       if (!clearBase && basicAttribute.contains(attr)) return;
       attr.clear(reset: reset);

@@ -9,6 +9,7 @@ abstract class SimpleModel extends Model {
 
   @override
   void clear({bool reset = false}) {
+    super.clear();
     for (Attribute attr in attributes.list) {
       attr.clear(reset: reset);
     }

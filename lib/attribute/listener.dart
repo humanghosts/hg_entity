@@ -1,3 +1,5 @@
+import 'attribute.dart';
+
 class AttributeListener<T> {
   bool Function(T value)? beforeSetValue;
   void Function(T value)? afterSetValue;
@@ -19,4 +21,16 @@ class ListAttributeListener<T> extends AttributeListener<List<T>> {
     this.beforeRemoveValue,
     this.afterRemoveValue,
   }) : super(beforeSetValue: beforeSetValue, afterSetValue: afterSetValue);
+}
+
+class AttributesListener {
+  void Function(Attribute attribute, Object? oldValue, Object? newValue)? onAttributeValueChange;
+  void Function(Attribute attribute, Object value)? onListAttributeValueAdd;
+  void Function(Attribute attribute, Object value)? onListAttributeValueRemove;
+
+  AttributesListener({
+    this.onAttributeValueChange,
+    this.onListAttributeValueAdd,
+    this.onListAttributeValueRemove,
+  });
 }
