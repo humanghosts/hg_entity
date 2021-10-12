@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:uuid/uuid.dart';
@@ -74,10 +73,5 @@ abstract class DataModel extends Model {
       if (null == modelAttr) return;
       attr.value = modelAttr.value;
     }
-  }
-
-  @override
-  T clone<T extends Model>() {
-    return json.decode(json.encode(this));
   }
 }

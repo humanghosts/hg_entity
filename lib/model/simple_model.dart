@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import '../attribute/export.dart';
@@ -26,10 +25,5 @@ abstract class SimpleModel extends Model {
       if (null == modelAttr) return;
       attr.value = modelAttr.value;
     }
-  }
-
-  @override
-  T clone<T extends Model>() {
-    return json.decode(json.encode(this));
   }
 }

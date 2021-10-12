@@ -1,4 +1,5 @@
 import '../attribute/export.dart';
+import '../context/cache.dart';
 
 abstract class Model {
   late final Attributes attributes;
@@ -41,5 +42,13 @@ abstract class Model {
 
   void merge(Model model);
 
-  T clone<T extends Model>();
+  T clone<T extends Model>() {
+    T newModel = ModelInitCache.get(runtimeType);
+    for (Attribute attr in attributes.list) {
+      String attrName = attr.name;
+      Attribute newAttr = newModel.attributes.get(attrName)!;
+      newAttr.value = attr.cvalue;
+    }
+    return newModel;
+  }
 }
