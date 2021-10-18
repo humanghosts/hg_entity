@@ -79,6 +79,14 @@ class ListAttribute<T> extends Attribute<List<T>> {
     parent.listener?.onListAttributeValueRemove?.call(this, value);
   }
 
+  void removeAt(int index) {
+    if (index >= this.value.length) {
+      return;
+    }
+    T value = this.value[index];
+    remove(value);
+  }
+
   void removeAll(List<T> valueList) {
     for (T value in valueList) {
       remove(value);

@@ -43,7 +43,16 @@ class Attribute<T> {
   bool get isNull => value == null;
 
   /// 获取值拷贝
-  T get cvalue => json.decode(json.encode(value));
+  T get cvalue {
+    if (isNull) {
+      return null as T;
+    }
+    if (T == DateTime || T.toString() == "DateTime?") {
+      return DateTime.fromMillisecondsSinceEpoch((value as DateTime).millisecondsSinceEpoch) as T;
+    } else {
+      return json.decode(json.encode(value));
+    }
+  }
 
   /// 设置字段值
   set value(T value) {
