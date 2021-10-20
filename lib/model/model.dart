@@ -43,7 +43,7 @@ abstract class Model {
   void merge(Model model);
 
   T clone<T extends Model>() {
-    T newModel = ModelInitCache.get(runtimeType);
+    T newModel = ConstructorCache.get(runtimeType);
     for (Attribute attr in attributes.list) {
       String attrName = attr.name;
       Attribute newAttr = newModel.attributes.get(attrName)!;

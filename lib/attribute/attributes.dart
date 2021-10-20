@@ -349,7 +349,6 @@ class Attributes {
   CustomAttribute<T> custom<T extends CustomValue>({
     required String name,
     String? title,
-    required T mvalue,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
@@ -357,7 +356,6 @@ class Attributes {
       parent: this,
       name: name,
       title: title ?? name,
-      mvalue: mvalue,
       dvalue: dvalue,
       listener: listener,
     );
@@ -369,7 +367,6 @@ class Attributes {
   CustomAttribute<T> customNullable<T extends CustomValue?>({
     required String name,
     String? title,
-    required T mvalue,
     T? dvalue,
     AttributeListener<T>? listener,
   }) {
@@ -377,7 +374,6 @@ class Attributes {
       parent: this,
       name: name,
       title: title ?? name,
-      mvalue: mvalue,
       dvalue: dvalue,
       listener: listener,
     );
@@ -551,7 +547,6 @@ class Attributes {
   CustomListAttribute<T> customList<T extends CustomValue>({
     required String name,
     String? title,
-    required T mvalue,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
@@ -559,7 +554,6 @@ class Attributes {
       parent: this,
       name: name,
       title: title ?? name,
-      mvalue: mvalue,
       dvalue: dvalue,
       listener: listener,
     );

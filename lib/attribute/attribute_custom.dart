@@ -18,13 +18,10 @@ abstract class CustomValue {
 
 /// 自定义类型的属性
 class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
-  T mvalue;
-
   CustomAttribute({
     required Attributes parent,
     required String name,
     required String title,
-    required this.mvalue,
     T? dvalue,
     AttributeListener<T>? listener,
   }) : super(
@@ -43,13 +40,10 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
 }
 
 class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
-  T mvalue;
-
   CustomListAttribute({
     required Attributes parent,
     required String name,
     required String title,
-    required this.mvalue,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) : super(
