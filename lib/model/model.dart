@@ -28,7 +28,7 @@ abstract class Model {
     _changeState();
   }
 
-  void onListAttributeValueAdd(Attribute attribute, Object value) {
+  void onListAttributeValueAdd(Attribute attribute, int index, Object value) {
     _changeState();
   }
 

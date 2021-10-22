@@ -8,16 +8,16 @@ class AttributeListener<T> {
 }
 
 class ListAttributeListener<T> extends AttributeListener<List<T>> {
-  bool Function(T value)? beforeAppendValue;
-  void Function(T value)? afterAppendValue;
+  bool Function(int index, T value)? beforeAddValue;
+  void Function(int index, T value)? afterAddValue;
   bool Function(T value)? beforeRemoveValue;
   void Function(T value)? afterRemoveValue;
 
   ListAttributeListener({
     bool Function(List<T> value)? beforeSetValue,
     void Function(List<T> value)? afterSetValue,
-    this.beforeAppendValue,
-    this.afterAppendValue,
+    this.beforeAddValue,
+    this.afterAddValue,
     this.beforeRemoveValue,
     this.afterRemoveValue,
   }) : super(beforeSetValue: beforeSetValue, afterSetValue: afterSetValue);
@@ -25,7 +25,7 @@ class ListAttributeListener<T> extends AttributeListener<List<T>> {
 
 class AttributesListener {
   void Function(Attribute attribute, Object? oldValue, Object? newValue)? onAttributeValueChange;
-  void Function(Attribute attribute, Object value)? onListAttributeValueAdd;
+  void Function(Attribute attribute, int index, Object value)? onListAttributeValueAdd;
   void Function(Attribute attribute, Object value)? onListAttributeValueRemove;
 
   AttributesListener({

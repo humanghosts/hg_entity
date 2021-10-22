@@ -22,8 +22,8 @@ abstract class DataTreeModel extends DataModel {
       name: "children",
       title: "下级",
       listener: ListAttributeListener(
-        beforeAppendValue: beforeAppendChild,
-        afterAppendValue: afterAppendChild,
+        beforeAddValue: beforeAddChild,
+        afterAddValue: afterAddChild,
         beforeRemoveValue: beforeRemoveChild,
         afterRemoveValue: afterRemoveChild,
       ),
@@ -77,7 +77,7 @@ abstract class DataTreeModel extends DataModel {
     }
   }
 
-  bool beforeAppendChild(DataTreeModel child) {
+  bool beforeAddChild(int index, DataTreeModel child) {
     if (childrenMap.containsKey(child.id.value)) {
       return false;
     }
@@ -87,7 +87,7 @@ abstract class DataTreeModel extends DataModel {
     return true;
   }
 
-  void afterAppendChild(DataTreeModel child) {
+  void afterAddChild(int index, DataTreeModel child) {
     childrenMap[child.id.value] = child;
   }
 

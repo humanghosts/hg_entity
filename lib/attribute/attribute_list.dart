@@ -35,22 +35,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
   }
 
   void append(T value) {
-    if (null == value) {
-      return;
-    }
-    ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
-    if (lis == null) {
-      this.value.add(value);
-      parent.listener?.onListAttributeValueAdd?.call(this, value);
-      return;
-    }
-    Function(T value)? beforeAppendValue = lis.beforeAppendValue;
-    if (null != beforeAppendValue && !beforeAppendValue(value)) {
-      return;
-    }
-    this.value.add(value);
-    lis.afterAppendValue?.call(value);
-    parent.listener?.onListAttributeValueAdd?.call(this, value);
+    insert(this.value.length, value);
   }
 
   void appendAll(List<T> valueList) {
@@ -91,6 +76,25 @@ class ListAttribute<T> extends Attribute<List<T>> {
     for (T value in valueList) {
       remove(value);
     }
+  }
+
+  void insert(int index, T value) {
+    if (null == value || index > this.value.length || index < 0) {
+      return;
+    }
+    ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
+    if (lis == null) {
+      this.value.insert(index, value);
+      parent.listener?.onListAttributeValueAdd?.call(this, index, value);
+      return;
+    }
+    Function(int index, T value)? beforeAppendValue = lis.beforeAddValue;
+    if (null != beforeAppendValue && !beforeAppendValue(index, value)) {
+      return;
+    }
+    this.value.insert(index, value);
+    lis.afterAddValue?.call(index, value);
+    parent.listener?.onListAttributeValueAdd?.call(this, index, value);
   }
 }
 
