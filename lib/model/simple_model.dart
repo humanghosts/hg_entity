@@ -16,13 +16,13 @@ abstract class SimpleModel extends Model {
 
   @override
   void merge(Model model) {
-    if (runtimeType == model.runtimeType) {
+    if (runtimeType != model.runtimeType) {
       log("merge fail!this type is $runtimeType but source type is ${model.runtimeType}", level: 100);
       return;
     }
     for (Attribute attr in attributes.list) {
       Attribute? modelAttr = model.attributes.get(attr.name);
-      if (null == modelAttr) return;
+      if (null == modelAttr) continue;
       attr.value = modelAttr.value;
     }
   }

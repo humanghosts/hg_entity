@@ -13,7 +13,7 @@ abstract class CustomValue {
 
   Object? toMap();
 
-  void fromMap(Object value);
+  Future<void> fromMap(Object value);
 }
 
 /// 自定义类型的属性
