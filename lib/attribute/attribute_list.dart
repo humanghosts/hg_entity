@@ -34,6 +34,12 @@ class ListAttribute<T> extends Attribute<List<T>> {
     return value.map((e) => json.decode(json.encode(e)) as T).toList();
   }
 
+  @override
+  set valueTypeless(dynamic value) {
+    assert(value is List);
+    this.value = (value as List).map((e) => e as T).toList();
+  }
+
   void append(T value) {
     insert(this.value.length, value);
   }

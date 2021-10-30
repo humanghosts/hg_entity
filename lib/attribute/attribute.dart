@@ -72,6 +72,10 @@ class Attribute<T> {
     parent.listener?.onAttributeValueChange?.call(this, oldValue, this.value);
   }
 
+  set valueTypeless(dynamic value) {
+    this.value = value as T;
+  }
+
   /// 清空值，如果有默认值
   void clear({bool reset = true}) {
     T oldValue = value;
