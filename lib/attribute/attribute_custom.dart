@@ -33,6 +33,11 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
         );
 
   @override
+  T initValue() {
+    return dvalue?.clone() as T;
+  }
+
+  @override
   bool get isNull => value == null || value!.isNull;
 
   @override
@@ -53,6 +58,11 @@ class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
           dvalue: dvalue ?? [],
           listener: listener,
         );
+
+  @override
+  T initValueEach(T value) {
+    return value.clone() as T;
+  }
 
   @override
   List<T> get cvalue {

@@ -21,6 +21,21 @@ class ListAttribute<T> extends Attribute<List<T>> {
           listener: listener,
         );
 
+  @override
+  List<T> initValue() {
+    return dvalue?.map(initValueEach).toList() ?? [];
+  }
+
+  T initValueEach(T value) {
+    T value;
+    if (T == DateTime || dvalue is DateTime) {
+      value = DateTime.fromMillisecondsSinceEpoch((dvalue as DateTime).millisecondsSinceEpoch) as T;
+    } else {
+      value = json.decode(json.encode(dvalue)) as T;
+    }
+    return value;
+  }
+
   /// 属性类型,List内的泛型
   @override
   Type get type => T;

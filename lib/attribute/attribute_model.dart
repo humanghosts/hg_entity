@@ -20,6 +20,11 @@ class ModelAttribute<T extends Model?> extends Attribute<T> {
         );
 
   @override
+  T initValue() {
+    return dvalue?.clone() as T;
+  }
+
+  @override
   T get cvalue => value?.clone() as T;
 }
 
@@ -37,6 +42,11 @@ class ModelListAttribute<T extends Model> extends ListAttribute<T> {
           dvalue: dvalue ?? [],
           listener: listener,
         );
+
+  @override
+  T initValueEach(T value) {
+    return value.clone() as T;
+  }
 
   @override
   List<T> get cvalue {

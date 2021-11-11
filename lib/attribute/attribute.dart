@@ -5,7 +5,7 @@ import 'listener.dart';
 
 class Attribute<T> {
   /// 字段值
-  T _value;
+  late T _value;
 
   /// 字段默认值
   final T? dvalue;
@@ -31,7 +31,19 @@ class Attribute<T> {
     required this.title,
     this.dvalue,
     this.listener,
-  }) : _value = dvalue as T;
+  }) {
+    _value = initValue();
+  }
+
+  T initValue() {
+    T value;
+    if (T == DateTime || dvalue is DateTime) {
+      value = DateTime.fromMillisecondsSinceEpoch((dvalue as DateTime).millisecondsSinceEpoch) as T;
+    } else {
+      value = json.decode(json.encode(dvalue)) as T;
+    }
+    return value;
+  }
 
   /// 获取字段值
   T get value => _value;
@@ -80,7 +92,7 @@ class Attribute<T> {
   void clear({bool reset = true}) {
     T oldValue = value;
     if (null != dvalue && reset) {
-      value = dvalue as T;
+      value = initValue();
     } else {
       value = null as T;
     }

@@ -2,7 +2,7 @@ import '../attribute/export.dart';
 import '../util/export.dart';
 import 'data_model.dart';
 
-abstract class DataTreeModel extends DataModel {
+abstract class DataTreeModel<T> extends DataModel {
   late final Attribute<String> path;
   late final Attribute<String> fullPath;
   late final Attribute<DataTreeModel?> parent;
@@ -84,6 +84,10 @@ abstract class DataTreeModel extends DataModel {
     // 这里会出发一次child的setParent，在beforeSetParent里面会进行校验
     // 在afterSetParent中会再次回到这里，然后再次进去beforeSetParent，然后判断上级一样，结束循环
     child.parent.value = this;
+    // 再次判断，因为这个代码会走两次，防止重复添加
+    if (childrenMap.containsKey(child.id.value)) {
+      return false;
+    }
     return true;
   }
 

@@ -1,6 +1,6 @@
 name: hg_entity
 description: entity package
-version: 0.0.41
+version: 0.0.46
 publish_to: http://localhost:8080
 homepage: https://github.com/humanghosts/hg_entity
 
