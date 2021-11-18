@@ -1,75 +1,55 @@
-import 'package:hg_entity/hg_entity.dart';
-
+/// 构造器缓存
 class ConstructorCache {
   ConstructorCache._();
 
+  /// 构造器缓存
   static final Map<String, Object Function([Map<String, dynamic>? args])> _cache = {};
 
-  static final Set<String> _simpleModelCache = {};
-  static final Set<String> _dataModelCache = {};
-  static final Set<String> _customValueCache = {};
-  static final Set<String> _unknownTypeCache = {};
+  /// 类型字符串与类型缓存
+  static final Map<String, Type> _typeCache = {};
 
+  /// 注册缓存,Type最好不要带？
   static void put(Type type, Object Function([Map<String, dynamic>? args]) constructor) {
-    String typeStr = "$type";
-    String typeStrNullable = "$type?";
-    _cache[typeStr] = constructor;
-    _cache[typeStrNullable] = constructor;
-    var value = constructor.call();
-    if (value is DataModel) {
-      _dataModelCache.add(typeStr);
-      _dataModelCache.add(typeStrNullable);
-    } else if (value is SimpleModel) {
-      _simpleModelCache.add(typeStr);
-      _simpleModelCache.add(typeStrNullable);
-    } else if (value is CustomValue) {
-      _customValueCache.add(typeStr);
-      _customValueCache.add(typeStrNullable);
+    String typeStr = type.toString();
+    String realTypeStr;
+    if (typeStr.endsWith("?")) {
+      realTypeStr = typeStr.substring(0, typeStr.length - 1);
     } else {
-      _unknownTypeCache.add(typeStr);
-      _unknownTypeCache.add(typeStrNullable);
+      realTypeStr = typeStr;
     }
+    String realTypeStrNullable = "$realTypeStr?";
+    _cache[realTypeStr] = constructor;
+    _cache[realTypeStrNullable] = constructor;
+    _typeCache[realTypeStr] = type;
+    _typeCache[realTypeStrNullable] = type;
   }
 
-  static Type getRawType(Type type) {
-    if (_dataModelCache.contains("$type")) {
-      return DataModel;
+  /// 通过类型字符串获取类型
+  static Type getType(String type) {
+    Type? t = _typeCache[type];
+    if (null == t) {
+      throw Exception("type $type is not register");
     }
-    if (_simpleModelCache.contains("$type")) {
-      return SimpleModel;
-    }
-    if (_customValueCache.contains("$type")) {
-      return CustomValue;
-    }
-    return Object;
+    return t;
   }
 
-  static Type getRawTypeStr(String type) {
-    if (_dataModelCache.contains(type)) {
-      return DataModel;
-    }
-    if (_simpleModelCache.contains(type)) {
-      return SimpleModel;
-    }
-    if (_customValueCache.contains(type)) {
-      return CustomValue;
-    }
-    return Object;
-  }
-
+  /// 通过类型获取构造器
   static T get<T>(Type type, [Map<String, dynamic>? args]) {
-    return getStr("$type");
+    return getByStr("$type");
   }
 
-  static T getStr<T>(String type, [Map<String, dynamic>? args]) {
+  /// 通过类型字符串获取构造器
+  static T getByStr<T>(String type, [Map<String, dynamic>? args]) {
     assert(_cache.containsKey(type), "register ${type.toString()}'s constructor first");
     return _cache[type]!.call(args) as T;
   }
 
+  /// 判断是否包含类型
   static bool containsKey(Type type) {
     return containsKeyStr("$type");
   }
 
+  /// 通过字符串判断是否包含类型
   static bool containsKeyStr(String type) {
     return _cache.containsKey(type);
   }
