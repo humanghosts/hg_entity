@@ -117,6 +117,12 @@ class ListAttribute<T> extends Attribute<List<T>> {
     lis.afterAddValue?.call(index, value);
     parent.listener?.onListAttributeValueAdd?.call(this, index, value);
   }
+
+  @override
+  void clear({bool reset = true}) {
+    List<T> allValue = [...value];
+    removeAll(allValue);
+  }
 }
 
 class DateTimeListAttribute extends ListAttribute<DateTime> {
