@@ -8,13 +8,15 @@ class ModelAttribute<T extends Model?> extends Attribute<T> {
   ModelAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue,
           listener: listener,
         );
@@ -32,13 +34,15 @@ class ModelListAttribute<T extends Model> extends ListAttribute<T> {
   ModelListAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue ?? [],
           listener: listener,
         );
@@ -59,13 +63,15 @@ class DataModelAttribute<T extends DataModel?> extends ModelAttribute<T> {
   DataModelAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue,
           listener: listener,
         );
@@ -75,13 +81,15 @@ class DataModelListAttribute<T extends DataModel> extends ModelListAttribute<T> 
   DataModelListAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue ?? [],
           listener: listener,
         );
@@ -91,13 +99,15 @@ class DataTreeModelAttribute<T extends DataTreeModel?> extends DataModelAttribut
   DataTreeModelAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue,
           listener: listener,
         );
@@ -107,13 +117,15 @@ class DataTreeModelListAttribute<T extends DataTreeModel> extends DataModelListA
   DataTreeModelListAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue ?? [],
           listener: listener,
         );
@@ -123,13 +135,15 @@ class SimpleModelAttribute<T extends SimpleModel?> extends ModelAttribute<T> {
   SimpleModelAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue,
           listener: listener,
         );
@@ -139,13 +153,15 @@ class SimpleModelListAttribute<T extends SimpleModel> extends ModelListAttribute
   SimpleModelListAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue ?? [],
           listener: listener,
         );

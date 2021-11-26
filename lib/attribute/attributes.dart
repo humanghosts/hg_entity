@@ -25,13 +25,15 @@ class Attributes {
   Attribute<num> number({
     required String name,
     String? title,
+    String? comment,
     required num dvalue,
     AttributeListener<num>? listener,
   }) {
     Attribute<num> attr = Attribute<num>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -43,13 +45,15 @@ class Attributes {
   Attribute<num?> numberNullable({
     required String name,
     String? title,
+    String? comment,
     num? dvalue,
     AttributeListener<num?>? listener,
   }) {
     Attribute<num?> attr = Attribute<num?>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -61,13 +65,15 @@ class Attributes {
   Attribute<int> integer({
     required String name,
     String? title,
+    String? comment,
     required int dvalue,
     AttributeListener<int>? listener,
   }) {
     Attribute<int> attr = Attribute<int>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -79,13 +85,15 @@ class Attributes {
   Attribute<int?> integerNullable({
     required String name,
     String? title,
+    String? comment,
     int? dvalue,
     AttributeListener<int?>? listener,
   }) {
     Attribute<int?> attr = Attribute<int?>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -97,13 +105,15 @@ class Attributes {
   Attribute<double> float({
     required String name,
     String? title,
+    String? comment,
     required double dvalue,
     AttributeListener<double>? listener,
   }) {
     Attribute<double> attr = Attribute<double>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -115,13 +125,15 @@ class Attributes {
   Attribute<double?> floatNullable({
     required String name,
     String? title,
+    String? comment,
     double? dvalue,
     AttributeListener<double?>? listener,
   }) {
     Attribute<double?> attr = Attribute<double?>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -133,13 +145,15 @@ class Attributes {
   Attribute<String> string({
     required String name,
     String? title,
+    String? comment,
     required String dvalue,
     AttributeListener<String>? listener,
   }) {
     Attribute<String> attr = Attribute<String>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -151,13 +165,15 @@ class Attributes {
   Attribute<String?> stringNullable({
     required String name,
     String? title,
+    String? comment,
     String? dvalue,
     AttributeListener<String?>? listener,
   }) {
     Attribute<String?> attr = Attribute<String?>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -169,13 +185,15 @@ class Attributes {
   Attribute<bool> boolean({
     required String name,
     String? title,
+    String? comment,
     required bool dvalue,
     AttributeListener<bool>? listener,
   }) {
     Attribute<bool> attr = Attribute<bool>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -187,13 +205,15 @@ class Attributes {
   Attribute<bool?> booleanNullable({
     required String name,
     String? title,
+    String? comment,
     bool? dvalue,
     AttributeListener<bool?>? listener,
   }) {
     Attribute<bool?> attr = Attribute<bool?>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -205,13 +225,15 @@ class Attributes {
   Attribute<DateTime> datetime({
     required String name,
     String? title,
+    String? comment,
     required DateTime dvalue,
     AttributeListener<DateTime>? listener,
   }) {
     Attribute<DateTime> attr = Attribute<DateTime>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -223,13 +245,15 @@ class Attributes {
   Attribute<DateTime?> datetimeNullable({
     required String name,
     String? title,
+    String? comment,
     DateTime? dvalue,
     AttributeListener<DateTime?>? listener,
   }) {
     Attribute<DateTime?> attr = Attribute<DateTime?>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -241,13 +265,15 @@ class Attributes {
   DataModelAttribute<T> dataModel<T extends DataModel>({
     required String name,
     String? title,
+    String? comment,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
     DataModelAttribute<T> attr = DataModelAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -259,13 +285,15 @@ class Attributes {
   DataModelAttribute<T> dataModelNullable<T extends DataModel?>({
     required String name,
     String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) {
     DataModelAttribute<T> attr = DataModelAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -277,13 +305,15 @@ class Attributes {
   DataTreeModelAttribute<T> dataTreeModel<T extends DataTreeModel>({
     required String name,
     String? title,
+    String? comment,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
     DataTreeModelAttribute<T> attr = DataTreeModelAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -295,13 +325,15 @@ class Attributes {
   DataTreeModelAttribute<T> dataTreeModelNullable<T extends DataTreeModel?>({
     required String name,
     String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) {
     DataTreeModelAttribute<T> attr = DataTreeModelAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -313,13 +345,15 @@ class Attributes {
   SimpleModelAttribute<T> simpleModel<T extends SimpleModel>({
     required String name,
     String? title,
+    String? comment,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
     SimpleModelAttribute<T> attr = SimpleModelAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -331,13 +365,15 @@ class Attributes {
   SimpleModelAttribute<T> simpleModelNullable<T extends SimpleModel?>({
     required String name,
     String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) {
     SimpleModelAttribute<T> attr = SimpleModelAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -349,13 +385,15 @@ class Attributes {
   CustomAttribute<T> custom<T extends CustomValue>({
     required String name,
     String? title,
+    String? comment,
     required T dvalue,
     AttributeListener<T>? listener,
   }) {
     CustomAttribute<T> attr = CustomAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -367,13 +405,15 @@ class Attributes {
   CustomAttribute<T> customNullable<T extends CustomValue?>({
     required String name,
     String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) {
     CustomAttribute<T> attr = CustomAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -385,13 +425,15 @@ class Attributes {
   ListAttribute<num> numberList({
     required String name,
     String? title,
+    String? comment,
     List<num>? dvalue,
     ListAttributeListener<num>? listener,
   }) {
     ListAttribute<num> attr = ListAttribute<num>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -403,13 +445,15 @@ class Attributes {
   ListAttribute<int> integerList({
     required String name,
     String? title,
+    String? comment,
     List<int>? dvalue,
     ListAttributeListener<int>? listener,
   }) {
     ListAttribute<int> attr = ListAttribute<int>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -421,13 +465,15 @@ class Attributes {
   ListAttribute<double> floatList({
     required String name,
     String? title,
+    String? comment,
     List<double>? dvalue,
     ListAttributeListener<double>? listener,
   }) {
     ListAttribute<double> attr = ListAttribute<double>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -439,13 +485,15 @@ class Attributes {
   ListAttribute<String> stringList({
     required String name,
     String? title,
+    String? comment,
     List<String>? dvalue,
     ListAttributeListener<String>? listener,
   }) {
     ListAttribute<String> attr = ListAttribute<String>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -457,13 +505,15 @@ class Attributes {
   ListAttribute<bool> booleanList({
     required String name,
     String? title,
+    String? comment,
     List<bool>? dvalue,
     ListAttributeListener<bool>? listener,
   }) {
     ListAttribute<bool> attr = ListAttribute<bool>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -475,13 +525,15 @@ class Attributes {
   DateTimeListAttribute datetimeList({
     required String name,
     String? title,
+    String? comment,
     List<DateTime>? dvalue,
     ListAttributeListener<DateTime>? listener,
   }) {
     DateTimeListAttribute attr = DateTimeListAttribute(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -493,13 +545,15 @@ class Attributes {
   DataModelListAttribute<T> dataModelList<T extends DataModel>({
     required String name,
     String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
     DataModelListAttribute<T> attr = DataModelListAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -511,13 +565,15 @@ class Attributes {
   DataTreeModelListAttribute<T> dataTreeModelList<T extends DataTreeModel>({
     required String name,
     String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
     DataTreeModelListAttribute<T> attr = DataTreeModelListAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -529,13 +585,15 @@ class Attributes {
   SimpleModelListAttribute<T> simpleModelList<T extends SimpleModel>({
     required String name,
     String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
     SimpleModelListAttribute<T> attr = SimpleModelListAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );
@@ -547,13 +605,15 @@ class Attributes {
   CustomListAttribute<T> customList<T extends CustomValue>({
     required String name,
     String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) {
     CustomListAttribute<T> attr = CustomListAttribute<T>(
       parent: this,
       name: name,
-      title: title ?? name,
+      title: title,
+      comment: comment,
       dvalue: dvalue,
       listener: listener,
     );

@@ -55,7 +55,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
       // 另一种情况不用处理
       return true;
     }
-    // 两个对象不等，但是id相等
+    // 两个对象不等，但是id相等，可以设置，替换对象就可以了
     if (parentValue.id.value == thisParentValue.id.value) {
       return true;
     }
@@ -75,6 +75,21 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
     } else {
       fullPath.value = "${(parentValue as DataTreeModel).fullPath.value}|${path.value}";
       parentValue.children.append(this);
+    }
+    // 如果当前节点有子节点
+    updateChildFullPath(this);
+  }
+
+  /// 更新子节点的fullPath
+  void updateChildFullPath(DataTreeModel current) {
+    List children = current.children.value;
+    if (children.isEmpty) {
+      return;
+    }
+    for (int i = 0; i < children.length; i++) {
+      DataTreeModel child = children[i] as DataTreeModel;
+      child.fullPath.value = "${current.fullPath.value}|${child.path.value}";
+      updateChildFullPath(child);
     }
   }
 

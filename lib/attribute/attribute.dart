@@ -14,12 +14,14 @@ class Attribute<T> {
   final String name;
 
   /// 字段标题
-  final String title;
+  late final String title;
 
   /// 监听器
   final AttributeListener<T>? listener;
 
   final Attributes parent;
+
+  late final String comment;
 
   /// 构造方法:
   /// [name] 字段名称;
@@ -28,11 +30,14 @@ class Attribute<T> {
   Attribute({
     required this.parent,
     required this.name,
-    required this.title,
+    String? title,
+    String? comment,
     this.dvalue,
     this.listener,
   }) {
     _value = initValue();
+    this.title = title ?? name;
+    this.comment = comment ?? title ?? name;
   }
 
   T initValue() {

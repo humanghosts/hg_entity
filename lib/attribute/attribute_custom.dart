@@ -21,13 +21,15 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
   CustomAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     T? dvalue,
     AttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue,
           listener: listener,
         );
@@ -48,13 +50,15 @@ class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
   CustomListAttribute({
     required Attributes parent,
     required String name,
-    required String title,
+    String? title,
+    String? comment,
     List<T>? dvalue,
     ListAttributeListener<T>? listener,
   }) : super(
           parent: parent,
           name: name,
           title: title,
+          comment: comment,
           dvalue: dvalue ?? [],
           listener: listener,
         );
