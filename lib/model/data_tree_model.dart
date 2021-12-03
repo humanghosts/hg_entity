@@ -16,12 +16,12 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
     fullPath = attributes.string(name: "full_path", title: "绝对路径", dvalue: path.value);
     parent = attributes.dataModelNullable<T?>(
       name: "parent",
-      title: "上级",
+      title: parentTitle,
       listener: AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent),
     );
     children = attributes.dataModelList<T>(
       name: "children",
-      title: "下级",
+      title: childrenTitle,
       listener: ListAttributeListener(
         beforeAddValue: beforeAddChild,
         afterAddValue: afterAddChild,
@@ -30,6 +30,9 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
       ),
     );
   }
+
+  String get parentTitle => "上级";
+  String get childrenTitle => "下级";
 
   int get pathLength => 4;
 

@@ -21,6 +21,46 @@ class Attributes {
   /// 获取所有属性
   List<Attribute> get list => _attributeMap.values.toList();
 
+  /// 任意字段
+  Attribute<Object> obj({
+    required String name,
+    String? title,
+    String? comment,
+    required Object dvalue,
+    AttributeListener<Object>? listener,
+  }) {
+    Attribute<Object> attr = Attribute<Object>(
+      parent: this,
+      name: name,
+      title: title,
+      comment: comment,
+      dvalue: dvalue,
+      listener: listener,
+    );
+    _attributeMap[name] = attr;
+    return attr;
+  }
+
+  /// 任意字段(值可空)
+  Attribute<Object?> objNullable({
+    required String name,
+    String? title,
+    String? comment,
+    Object? dvalue,
+    AttributeListener<Object?>? listener,
+  }) {
+    Attribute<Object?> attr = Attribute<Object?>(
+      parent: this,
+      name: name,
+      title: title,
+      comment: comment,
+      dvalue: dvalue,
+      listener: listener,
+    );
+    _attributeMap[name] = attr;
+    return attr;
+  }
+
   /// 数值字段
   Attribute<num> number({
     required String name,
