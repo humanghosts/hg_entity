@@ -5,22 +5,29 @@ import 'data_model.dart';
 /// T must is a DataTreeModel
 abstract class DataTreeModel<T extends DataModel> extends DataModel {
   late final Attribute<String> path;
+  static const String PATH_KEY = "path";
+
   late final Attribute<String> fullPath;
+  static const FULL_PATH_KEY = "full_path";
+
   late final Attribute<T?> parent;
+  static const PARENT_KEY = "parent";
+
   late final ListAttribute<T> children;
+  static const CHILDREN_KEY = "children";
 
   final Map<String, T> childrenMap = {};
 
   DataTreeModel() {
-    path = attributes.string(name: "path", title: "路径", dvalue: PathUtils.genPath(length: pathLength));
-    fullPath = attributes.string(name: "full_path", title: "绝对路径", dvalue: path.value);
+    path = attributes.string(name: PATH_KEY, title: "路径", dvalue: PathUtils.genPath(length: pathLength));
+    fullPath = attributes.string(name: FULL_PATH_KEY, title: "绝对路径", dvalue: path.value);
     parent = attributes.dataModelNullable<T?>(
-      name: "parent",
+      name: PARENT_KEY,
       title: parentTitle,
       listener: AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent),
     );
     children = attributes.dataModelList<T>(
-      name: "children",
+      name: CHILDREN_KEY,
       title: childrenTitle,
       listener: ListAttributeListener(
         beforeAddValue: beforeAddChild,
@@ -32,6 +39,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   }
 
   String get parentTitle => "上级";
+
   String get childrenTitle => "下级";
 
   int get pathLength => 4;
