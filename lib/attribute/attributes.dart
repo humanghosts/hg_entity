@@ -1,4 +1,5 @@
 import 'package:hg_entity/attribute/export.dart';
+import 'package:hg_entity/context/cache.dart';
 
 import '../model/export.dart';
 import 'attribute.dart';
@@ -261,12 +262,12 @@ class Attributes {
     return attr;
   }
 
-  /// 日期时间字段
+  /// 日期时间字段，不给默认值，默认值是现在
   Attribute<DateTime> datetime({
     required String name,
     String? title,
     String? comment,
-    required DateTime dvalue,
+    DateTime? dvalue,
     AttributeListener<DateTime>? listener,
   }) {
     Attribute<DateTime> attr = Attribute<DateTime>(
@@ -274,7 +275,7 @@ class Attributes {
       name: name,
       title: title,
       comment: comment,
-      dvalue: dvalue,
+      dvalue: dvalue ?? DateTime.now(),
       listener: listener,
     );
     _attributeMap[name] = attr;
@@ -306,7 +307,7 @@ class Attributes {
     required String name,
     String? title,
     String? comment,
-    required T dvalue,
+    T? dvalue,
     AttributeListener<T>? listener,
   }) {
     DataModelAttribute<T> attr = DataModelAttribute<T>(
@@ -314,7 +315,7 @@ class Attributes {
       name: name,
       title: title,
       comment: comment,
-      dvalue: dvalue,
+      dvalue: dvalue ?? ConstructorCache.get(T),
       listener: listener,
     );
     _attributeMap[name] = attr;
@@ -346,7 +347,7 @@ class Attributes {
     required String name,
     String? title,
     String? comment,
-    required T dvalue,
+    T? dvalue,
     AttributeListener<T>? listener,
   }) {
     DataTreeModelAttribute<T> attr = DataTreeModelAttribute<T>(
@@ -354,7 +355,7 @@ class Attributes {
       name: name,
       title: title,
       comment: comment,
-      dvalue: dvalue,
+      dvalue: dvalue ?? ConstructorCache.get(T),
       listener: listener,
     );
     _attributeMap[name] = attr;
@@ -386,7 +387,7 @@ class Attributes {
     required String name,
     String? title,
     String? comment,
-    required T dvalue,
+    T? dvalue,
     AttributeListener<T>? listener,
   }) {
     SimpleModelAttribute<T> attr = SimpleModelAttribute<T>(
@@ -394,7 +395,7 @@ class Attributes {
       name: name,
       title: title,
       comment: comment,
-      dvalue: dvalue,
+      dvalue: dvalue ?? ConstructorCache.get(T),
       listener: listener,
     );
     _attributeMap[name] = attr;
@@ -426,7 +427,7 @@ class Attributes {
     required String name,
     String? title,
     String? comment,
-    required T dvalue,
+    T? dvalue,
     AttributeListener<T>? listener,
   }) {
     CustomAttribute<T> attr = CustomAttribute<T>(
@@ -434,7 +435,7 @@ class Attributes {
       name: name,
       title: title,
       comment: comment,
-      dvalue: dvalue,
+      dvalue: dvalue ?? ConstructorCache.get(T),
       listener: listener,
     );
     _attributeMap[name] = attr;
