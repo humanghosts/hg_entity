@@ -57,73 +57,80 @@ class ListAttribute<T> extends Attribute<List<T>> {
     this.value = (value as List).map((e) => e as T).toList();
   }
 
-  void append(T value) {
+  ListAttribute append(T value) {
     insert(this.value.length, value);
+    return this;
   }
 
-  void appendAll(List<T> valueList) {
+  ListAttribute appendAll(List<T> valueList) {
     for (T value in valueList) {
       append(value);
     }
+    return this;
   }
 
-  void remove(T value) {
+  ListAttribute remove(T value) {
     if (null == value) {
-      return;
+      return this;
     }
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.remove(value);
       parent.listener?.onListAttributeValueRemove?.call(this, value);
 
-      return;
+      return this;
     }
     Function(T value)? beforeRemoveValue = lis.beforeRemoveValue;
     if (null != beforeRemoveValue && !beforeRemoveValue(value)) {
-      return;
+      return this;
     }
     this.value.remove(value);
     lis.afterRemoveValue?.call(value);
     parent.listener?.onListAttributeValueRemove?.call(this, value);
+    return this;
   }
 
-  void removeAt(int index) {
+  ListAttribute removeAt(int index) {
     if (index >= this.value.length) {
-      return;
+      return this;
     }
     T value = this.value[index];
     remove(value);
+    return this;
   }
 
-  void removeAll(List<T> valueList) {
+  ListAttribute removeAll(List<T> valueList) {
     for (T value in valueList) {
       remove(value);
     }
+    return this;
   }
 
-  void insert(int index, T value) {
+  ListAttribute insert(int index, T value) {
     if (null == value || index > this.value.length || index < 0) {
-      return;
+      return this;
     }
     ListAttributeListener<T>? lis = listener as ListAttributeListener<T>?;
     if (lis == null) {
       this.value.insert(index, value);
       parent.listener?.onListAttributeValueAdd?.call(this, index, value);
-      return;
+      return this;
     }
     Function(int index, T value)? beforeAppendValue = lis.beforeAddValue;
     if (null != beforeAppendValue && !beforeAppendValue(index, value)) {
-      return;
+      return this;
     }
     this.value.insert(index, value);
     lis.afterAddValue?.call(index, value);
     parent.listener?.onListAttributeValueAdd?.call(this, index, value);
+    return this;
   }
 
   @override
-  void clear({bool reset = true}) {
+  ListAttribute clear({bool reset = true}) {
     List<T> allValue = [...value];
     removeAll(allValue);
+    return this;
   }
 }
 

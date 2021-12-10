@@ -94,7 +94,7 @@ class Attribute<T> {
   }
 
   /// 清空值，如果有默认值
-  void clear({bool reset = true}) {
+  Attribute clear({bool reset = true}) {
     T oldValue = value;
     if (null != dvalue && reset) {
       value = initValue();
@@ -102,6 +102,7 @@ class Attribute<T> {
       value = null as T;
     }
     parent.listener?.onAttributeValueChange?.call(this, oldValue, value);
+    return this;
   }
 
   @override

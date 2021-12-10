@@ -9,11 +9,11 @@ abstract class CustomValue {
 
   CustomValue clone();
 
-  void merge(CustomValue value);
+  CustomValue merge(CustomValue value);
 
   Object? toMap();
 
-  Future<void> fromMap(Object value);
+  Future<CustomValue> fromMap(Object value);
 }
 
 /// 自定义类型的属性

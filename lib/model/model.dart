@@ -36,14 +36,15 @@ abstract class Model {
     _changeState();
   }
 
-  void clear({bool reset = false}) {
+  Model clear({bool reset = false}) {
     state = States.none;
+    return this;
   }
 
-  void merge(Model model);
+  Model merge(Model model);
 
-  T clone<T extends Model>() {
-    T newModel = ConstructorCache.get(runtimeType);
+  Model clone() {
+    Model newModel = ConstructorCache.get(runtimeType);
     for (Attribute attr in attributes.list) {
       String attrName = attr.name;
       Attribute newAttr = newModel.attributes.get(attrName)!;
