@@ -1,5 +1,4 @@
-import '../attribute/export.dart';
-import '../context/cache.dart';
+import 'package:hg_entity/hg_entity.dart';
 
 abstract class Model {
   late final Attributes attributes;
@@ -11,7 +10,7 @@ abstract class Model {
       onListAttributeValueAdd: onListAttributeValueAdd,
       onListAttributeValueRemove: onListAttributeValueRemove,
     );
-    attributes = Attributes(listener: listener);
+    attributes = Attributes(listener: listener, model: this);
   }
 
   void _changeState() {
@@ -36,7 +35,7 @@ abstract class Model {
     _changeState();
   }
 
-  Model clear({bool reset = false}) {
+  Model clear() {
     state = States.none;
     return this;
   }

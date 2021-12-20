@@ -1,67 +1,8 @@
 import 'package:hg_entity/hg_entity.dart';
 
-/// 模型
-class ModelAttribute<T extends Model?> extends Attribute<T> {
-  ModelAttribute({
-    required Attributes parent,
-    required String name,
-    String? title,
-    String? comment,
-    T? value,
-    T? dvalue,
-    Map<String, AttributeListener<T>>? listenerMap,
-  }) : super(
-          parent: parent,
-          name: name,
-          title: title,
-          comment: comment,
-          value: value,
-          dvalue: dvalue,
-          listenerMap: listenerMap,
-        );
-
-  @override
-  void setValueFromDefault() {
-    value = dvalue?.clone() as T;
-  }
-
-  @override
-  T get cvalue => value?.clone() as T;
-}
-
-class ModelListAttribute<T extends Model> extends ListAttribute<T> {
-  ModelListAttribute({
-    required Attributes parent,
-    required String name,
-    String? title,
-    String? comment,
-    List<T>? value,
-    List<T>? dvalue,
-    Map<String, ListAttributeListener<T>>? listenerMap,
-  }) : super(
-          parent: parent,
-          name: name,
-          title: title,
-          comment: comment,
-          value: value,
-          dvalue: dvalue,
-          listenerMap: listenerMap,
-        );
-
-  @override
-  void setValueFromDefault() {
-    value = dvalue?.map((e) => e.clone() as T).toList() as List<T>;
-  }
-
-  @override
-  List<T> get cvalue {
-    if (isNull) return [];
-    return value.map((e) => e.clone() as T).toList();
-  }
-}
-
-class DataModelAttribute<T extends DataModel?> extends ModelAttribute<T> {
-  DataModelAttribute({
+/// 数字类型属性
+class NumberAttribute<T extends num?> extends Attribute<T> {
+  NumberAttribute({
     required Attributes parent,
     required String name,
     String? title,
@@ -80,8 +21,8 @@ class DataModelAttribute<T extends DataModel?> extends ModelAttribute<T> {
         );
 }
 
-class DataModelListAttribute<T extends DataModel> extends ModelListAttribute<T> {
-  DataModelListAttribute({
+class NumberListAttribute<T extends num> extends ListAttribute<T> {
+  NumberListAttribute({
     required Attributes parent,
     required String name,
     String? title,
@@ -100,8 +41,9 @@ class DataModelListAttribute<T extends DataModel> extends ModelListAttribute<T> 
         );
 }
 
-class DataTreeModelAttribute<T extends DataTreeModel?> extends DataModelAttribute<T> {
-  DataTreeModelAttribute({
+/// 整型
+class IntegerAttribute<T extends int?> extends NumberAttribute<T> {
+  IntegerAttribute({
     required Attributes parent,
     required String name,
     String? title,
@@ -120,8 +62,8 @@ class DataTreeModelAttribute<T extends DataTreeModel?> extends DataModelAttribut
         );
 }
 
-class DataTreeModelListAttribute<T extends DataTreeModel> extends DataModelListAttribute<T> {
-  DataTreeModelListAttribute({
+class IntegerListAttribute<T extends int> extends NumberListAttribute<T> {
+  IntegerListAttribute({
     required Attributes parent,
     required String name,
     String? title,
@@ -140,8 +82,9 @@ class DataTreeModelListAttribute<T extends DataTreeModel> extends DataModelListA
         );
 }
 
-class SimpleModelAttribute<T extends SimpleModel?> extends ModelAttribute<T> {
-  SimpleModelAttribute({
+/// 浮点型
+class FloatAttribute<T extends double?> extends NumberAttribute<T> {
+  FloatAttribute({
     required Attributes parent,
     required String name,
     String? title,
@@ -160,8 +103,8 @@ class SimpleModelAttribute<T extends SimpleModel?> extends ModelAttribute<T> {
         );
 }
 
-class SimpleModelListAttribute<T extends SimpleModel> extends ModelListAttribute<T> {
-  SimpleModelListAttribute({
+class FloatListAttribute<T extends double> extends NumberListAttribute<T> {
+  FloatListAttribute({
     required Attributes parent,
     required String name,
     String? title,

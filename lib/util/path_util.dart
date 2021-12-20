@@ -1,7 +1,7 @@
 import 'dart:math';
 
-class PathUtils {
-  PathUtils._();
+class PathUtil {
+  PathUtil._();
 
   /// 随机数产生器
   static final Random _random = Random();

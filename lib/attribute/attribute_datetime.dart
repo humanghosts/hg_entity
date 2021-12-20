@@ -1,26 +1,8 @@
 import 'package:hg_entity/hg_entity.dart';
 
-/// 自定义attribute的value
-abstract class CustomValue {
-  /// 是否为空
-  bool get isNull;
-
-  /// 拷贝
-  CustomValue clone();
-
-  /// 合并
-  CustomValue merge(CustomValue value);
-
-  /// 转换为Map
-  Future<Object?> toMap({Map<String, Object?>? args});
-
-  /// 从Map转换
-  Future<CustomValue> fromMap(Object? value, {Map<String, Object?>? args});
-}
-
-/// 自定义类型的属性
-class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
-  CustomAttribute({
+/// 时间类型
+class DateTimeAttribute<T extends DateTime?> extends Attribute<T> {
+  DateTimeAttribute({
     required Attributes parent,
     required String name,
     String? title,
@@ -40,18 +22,20 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
 
   @override
   void setValueFromDefault() {
-    value = dvalue?.clone() as T;
+    value = DateTime.fromMillisecondsSinceEpoch((dvalue as DateTime).millisecondsSinceEpoch) as T;
   }
 
   @override
-  bool get isNull => value == null || value!.isNull;
-
-  @override
-  T get cvalue => value?.clone() as T;
+  T get cvalue {
+    if (isNull) {
+      return null as T;
+    }
+    return DateTime.fromMillisecondsSinceEpoch((value as DateTime).millisecondsSinceEpoch) as T;
+  }
 }
 
-class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
-  CustomListAttribute({
+class DateTimeListAttribute<T extends DateTime> extends ListAttribute<T> {
+  DateTimeListAttribute({
     required Attributes parent,
     required String name,
     String? title,
@@ -71,12 +55,12 @@ class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
 
   @override
   void setValueFromDefault() {
-    value = dvalue!.map((e) => e.clone() as T).toList();
+    value = dvalue?.map((e) => DateTime.fromMillisecondsSinceEpoch(e.millisecondsSinceEpoch) as T).toList() as List<T>;
   }
 
   @override
   List<T> get cvalue {
     if (isNull) return [];
-    return value.map((e) => e.clone() as T).toList();
+    return value.map((e) => DateTime.fromMillisecondsSinceEpoch(e.millisecondsSinceEpoch) as T).toList();
   }
 }

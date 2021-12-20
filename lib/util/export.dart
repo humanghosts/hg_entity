@@ -1,1 +1,2 @@
-export 'path_utils.dart';
+export 'path_util.dart';
+export 'type_util.dart';

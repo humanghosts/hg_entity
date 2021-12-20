@@ -1,40 +1,49 @@
-import '../attribute/export.dart';
-import '../util/export.dart';
-import 'data_model.dart';
+import 'package:hg_entity/hg_entity.dart';
 
 /// T must is a DataTreeModel
 abstract class DataTreeModel<T extends DataModel> extends DataModel {
+  /// 路径
   late final Attribute<String> path;
-  static const String PATH_KEY = "path";
+  static const String pathKey = "path";
 
+  /// 全路径
   late final Attribute<String> fullPath;
-  static const FULL_PATH_KEY = "full_path";
+  static const fullPathKey = "full_path";
 
+  /// 上级
   late final Attribute<T?> parent;
-  static const PARENT_KEY = "parent";
+  static const parentKey = "parent";
 
+  /// 下级
   late final ListAttribute<T> children;
-  static const CHILDREN_KEY = "children";
+  static const childrenKey = "children";
+
+  /// 监听器key
+  static const listenerKey = "data_tree_model";
 
   final Map<String, T> childrenMap = {};
 
   DataTreeModel() {
-    path = attributes.string(name: PATH_KEY, title: "路径", dvalue: PathUtils.genPath(length: pathLength));
-    fullPath = attributes.string(name: FULL_PATH_KEY, title: "绝对路径", dvalue: path.value);
+    path = attributes.string(name: pathKey, title: "路径", dvalue: PathUtil.genPath(length: pathLength));
+    fullPath = attributes.string(name: fullPathKey, title: "绝对路径", dvalue: path.value);
     parent = attributes.dataModelNullable<T?>(
-      name: PARENT_KEY,
+      name: parentKey,
       title: parentTitle,
-      listener: AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent),
+      listenerMap: {
+        listenerKey: AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent),
+      },
     );
     children = attributes.dataModelList<T>(
-      name: CHILDREN_KEY,
+      name: childrenKey,
       title: childrenTitle,
-      listener: ListAttributeListener(
-        beforeAddValue: beforeAddChild,
-        afterAddValue: afterAddChild,
-        beforeRemoveValue: beforeRemoveChild,
-        afterRemoveValue: afterRemoveChild,
-      ),
+      listenerMap: {
+        listenerKey: ListAttributeListener(
+          beforeAddValue: beforeAddChild,
+          afterAddValue: afterAddChild,
+          beforeRemoveValue: beforeRemoveChild,
+          afterRemoveValue: afterRemoveChild,
+        ),
+      },
     );
   }
 
@@ -74,7 +83,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
     // 判断是否是否循环树
     bool isLoop = fullPath.value.contains(parentPath);
     if (isLoop) {
-      throw Exception("loop tree,please check");
+      throw Exception("树发生了循环，请检查树结构");
     }
     return true;
   }

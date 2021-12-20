@@ -1,3 +1,5 @@
+import 'package:hg_entity/hg_entity.dart';
+
 /// 构造器缓存
 class ConstructorCache {
   ConstructorCache._();
@@ -10,13 +12,7 @@ class ConstructorCache {
 
   /// 注册缓存,Type最好不要带？
   static void put(Type type, Object Function([Map<String, dynamic>? args]) constructor) {
-    String typeStr = type.toString();
-    String realTypeStr;
-    if (typeStr.endsWith("?")) {
-      realTypeStr = typeStr.substring(0, typeStr.length - 1);
-    } else {
-      realTypeStr = typeStr;
-    }
+    String realTypeStr = TypeUtil.getNonNullStr(type);
     String realTypeStrNullable = "$realTypeStr?";
     _cache[realTypeStr] = constructor;
     _cache[realTypeStrNullable] = constructor;
@@ -27,10 +23,8 @@ class ConstructorCache {
   /// 通过类型字符串获取类型
   static Type getType(String type) {
     Type? t = _typeCache[type];
-    if (null == t) {
-      throw Exception("type $type is not register");
-    }
-    return t;
+    assert(null != t, "类型$type尚未注册");
+    return t!;
   }
 
   /// 通过类型获取构造器
@@ -40,7 +34,7 @@ class ConstructorCache {
 
   /// 通过类型字符串获取构造器
   static T getByStr<T>(String type, [Map<String, dynamic>? args]) {
-    assert(_cache.containsKey(type), "register ${type.toString()}'s constructor first");
+    assert(_cache.containsKey(type), "无法使用，类型$type尚未注册");
     return _cache[type]!.call(args) as T;
   }
 

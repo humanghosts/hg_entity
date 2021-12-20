@@ -1,14 +1,13 @@
-import '../attribute/export.dart';
-import 'model.dart';
+import 'package:hg_entity/hg_entity.dart';
 
 abstract class SimpleModel extends Model {
   SimpleModel();
 
   @override
-  SimpleModel clear({bool reset = false}) {
+  SimpleModel clear() {
     super.clear();
     for (Attribute attr in attributes.list) {
-      attr.clear(reset: reset);
+      attr.clear();
     }
     return this;
   }

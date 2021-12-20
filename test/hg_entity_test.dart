@@ -5,3 +5,15 @@ void main() {
   a.removeRange(maxNum, count);
   print(a.join(","));
 }
+
+class A {
+  late final b;
+  A() {
+    b = B(this);
+  }
+}
+
+class B {
+  A a;
+  B(this.a);
+}
