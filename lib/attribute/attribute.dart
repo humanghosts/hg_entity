@@ -13,10 +13,10 @@ class Attribute<T> {
   final String name;
 
   /// 字段标题
-  late final String title;
+  late String title;
 
   /// 字段注释
-  late final String? comment;
+  late String? comment;
 
   /// 监听器 {id:listener}
   late final Map<String, AttributeListener<T>> listenerMap;
@@ -50,22 +50,28 @@ class Attribute<T> {
   }
 
   /// 初始化值
-  void initValue(T? value) {
+  void initValue(T? value, {bool isInit = true}) {
     // 是否为可空类型
-    bool isNullable = TypeUtil.isNullable(T);
+    bool isNullable = type.toString().endsWith("?");
     // 非空类型并且value为空，使用dvalue赋值
     if (null == value && !isNullable) {
       assert(dvalue != null, "$name属性类型非空，必须有值或者默认值}");
-      setValueFromDefault();
+      if (isInit) {
+        _value = getDefaultValue();
+      } else {
+        this.value = getDefaultValue();
+      }
     } else {
-      this.value = value as T;
+      if (isInit) {
+        _value = value as T;
+      } else {
+        this.value = value as T;
+      }
     }
   }
 
-  /// 将默认值拷贝后设置到值上
-  void setValueFromDefault() {
-    value = json.decode(json.encode(dvalue)) as T;
-  }
+  /// 获取默认值
+  T getDefaultValue() => json.decode(json.encode(dvalue)) as T;
 
   /// 获取字段值
   T get value => _value;
@@ -124,7 +130,7 @@ class Attribute<T> {
     // 旧值
     T oldValue = value;
     // 重新初始化值
-    initValue(null);
+    initValue(null, isInit: false);
     // 调用父监听器，监听值的修改
     parent.listener?.onAttributeValueChange?.call(this, oldValue, value);
     return this;
@@ -182,9 +188,7 @@ class ListAttribute<T> extends Attribute<List<T>> {
         );
 
   @override
-  void setValueFromDefault() {
-    value = dvalue?.map((e) => json.decode(json.encode(e)) as T).toList() as List<T>;
-  }
+  List<T> getDefaultValue() => dvalue?.map((e) => json.decode(json.encode(e)) as T).toList() as List<T>;
 
   /// 属性类型,List内的泛型
   @override

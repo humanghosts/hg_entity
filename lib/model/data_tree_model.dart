@@ -11,47 +11,52 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   static const fullPathKey = "full_path";
 
   /// 上级
-  late final Attribute<T?> parent;
+  late Attribute<T?> parent;
   static const parentKey = "parent";
 
   /// 下级
-  late final ListAttribute<T> children;
+  late ListAttribute<T> children;
   static const childrenKey = "children";
-
-  /// 监听器key
-  static const listenerKey = "data_tree_model";
-
-  final Map<String, T> childrenMap = {};
 
   DataTreeModel() {
     path = attributes.string(name: pathKey, title: "路径", dvalue: PathUtil.genPath(length: pathLength));
     fullPath = attributes.string(name: fullPathKey, title: "绝对路径", dvalue: path.value);
+    parent = attributes.dataModelNullable<T?>(name: parentKey, title: "上级");
+    children = attributes.dataModelList<T>(name: childrenKey, title: "下级");
+  }
+
+  int get pathLength => 4;
+}
+
+/// 实现了部分功能的DataTreeModel
+abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeModel<T> {
+  final Map<String, T> childrenMap = {};
+
+  /// 监听器key
+  static const listenerKey = "data_tree_model";
+
+  AdvancedDataTreeModel() {
     parent = attributes.dataModelNullable<T?>(
-      name: parentKey,
-      title: parentTitle,
+      name: DataTreeModel.parentKey,
+      title: "上级",
       listenerMap: {
         listenerKey: AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent),
       },
     );
-    children = attributes.dataModelList<T>(
-      name: childrenKey,
-      title: childrenTitle,
+    children = attributes.dataTreeModelList<T>(
+      name: DataTreeModel.childrenKey,
+      title: "下级",
       listenerMap: {
         listenerKey: ListAttributeListener(
           beforeAddValue: beforeAddChild,
           afterAddValue: afterAddChild,
+          beforeSetValue: beforeSetChildren,
           beforeRemoveValue: beforeRemoveChild,
           afterRemoveValue: afterRemoveChild,
         ),
       },
     );
   }
-
-  String get parentTitle => "上级";
-
-  String get childrenTitle => "下级";
-
-  int get pathLength => 4;
 
   T? getChild(String? id) {
     return childrenMap[id];
@@ -64,7 +69,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
       return false;
     }
     // 处理有一个为null的情况
-    DataTreeModel? thisParentValue = parent.value as DataTreeModel?;
+    DataTreeModel? thisParentValue = parent.value;
     if (parentValue == null || thisParentValue == null) {
       // parentValue==null thisParenValue!=null
       // 清空parent
@@ -79,7 +84,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
     if (parentValue.id.value == thisParentValue.id.value) {
       return true;
     }
-    String parentPath = (parentValue as DataTreeModel).path.value;
+    String parentPath = (parentValue).path.value;
     // 判断是否是否循环树
     bool isLoop = fullPath.value.contains(parentPath);
     if (isLoop) {
@@ -93,7 +98,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
     if (parentValue == null) {
       fullPath.value = path.value;
     } else {
-      fullPath.value = "${(parentValue as DataTreeModel).fullPath.value}|${path.value}";
+      fullPath.value = "${parentValue.fullPath.value}|${path.value}";
       parentValue.children.append(this);
     }
     // 如果当前节点有子节点
@@ -119,7 +124,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
     }
     // 这里会出发一次child的setParent，在beforeSetParent里面会进行校验
     // 在afterSetParent中会再次回到这里，然后再次进去beforeSetParent，然后判断上级一样，结束循环
-    (child as DataTreeModel).parent.value = this;
+    child.parent.value = this;
     // 再次判断，因为这个代码会走两次，防止重复添加
     if (childrenMap.containsKey(child.id.value)) {
       return false;
@@ -129,6 +134,11 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
 
   void afterAddChild(int index, T child) {
     childrenMap[child.id.value] = child;
+  }
+
+  bool beforeSetChildren(List<T> children) {
+    this.children.appendAll(children);
+    return false;
   }
 
   bool beforeRemoveChild(T child) {
@@ -142,6 +152,6 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
     childrenMap.remove(child.id.value);
     // 这里会出发一次child的setParent，在beforeSetParent里面会进行校验
     // 会再次回到beforeRemoveChild,判断map里面已经没有了，就会结束循环
-    (child as DataTreeModel).parent.value = null;
+    child.parent.value = null;
   }
 }

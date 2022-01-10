@@ -1,5 +1,3 @@
-import 'package:hg_entity/hg_entity.dart';
-
 /// 构造器缓存
 class ConstructorCache {
   ConstructorCache._();
@@ -12,7 +10,13 @@ class ConstructorCache {
 
   /// 注册缓存,Type最好不要带？
   static void put(Type type, Object Function([Map<String, dynamic>? args]) constructor) {
-    String realTypeStr = TypeUtil.getNonNullStr(type);
+    String typeStr = type.toString();
+    String realTypeStr;
+    if (type.toString().endsWith("?")) {
+      realTypeStr = typeStr.substring(0, typeStr.length - 1);
+    } else {
+      realTypeStr = typeStr;
+    }
     String realTypeStrNullable = "$realTypeStr?";
     _cache[realTypeStr] = constructor;
     _cache[realTypeStrNullable] = constructor;

@@ -21,9 +21,7 @@ class DateTimeAttribute<T extends DateTime?> extends Attribute<T> {
         );
 
   @override
-  void setValueFromDefault() {
-    value = DateTime.fromMillisecondsSinceEpoch((dvalue as DateTime).millisecondsSinceEpoch) as T;
-  }
+  T getDefaultValue() => DateTime.fromMillisecondsSinceEpoch((dvalue as DateTime).millisecondsSinceEpoch) as T;
 
   @override
   T get cvalue {
@@ -54,9 +52,7 @@ class DateTimeListAttribute<T extends DateTime> extends ListAttribute<T> {
         );
 
   @override
-  void setValueFromDefault() {
-    value = dvalue?.map((e) => DateTime.fromMillisecondsSinceEpoch(e.millisecondsSinceEpoch) as T).toList() as List<T>;
-  }
+  List<T> getDefaultValue() => dvalue?.map((e) => DateTime.fromMillisecondsSinceEpoch(e.millisecondsSinceEpoch) as T).toList() as List<T>;
 
   @override
   List<T> get cvalue {

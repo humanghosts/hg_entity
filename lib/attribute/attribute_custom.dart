@@ -39,9 +39,7 @@ class CustomAttribute<T extends CustomValue?> extends Attribute<T> {
         );
 
   @override
-  void setValueFromDefault() {
-    value = dvalue?.clone() as T;
-  }
+  T getDefaultValue() => dvalue?.clone() as T;
 
   @override
   bool get isNull => value == null || value!.isNull;
@@ -70,9 +68,7 @@ class CustomListAttribute<T extends CustomValue> extends ListAttribute<T> {
         );
 
   @override
-  void setValueFromDefault() {
-    value = dvalue!.map((e) => e.clone() as T).toList();
-  }
+  List<T> getDefaultValue() => dvalue!.map((e) => e.clone() as T).toList();
 
   @override
   List<T> get cvalue {
