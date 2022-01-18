@@ -734,7 +734,7 @@ class Attributes {
     String? title,
     String? comment,
     T? value,
-    required T dvalue,
+    T? dvalue,
     Map<String, AttributeListener<T>>? listenerMap,
   }) {
     SimpleModelAttribute<T> attr = SimpleModelAttribute<T>(
