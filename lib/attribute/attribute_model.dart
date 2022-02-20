@@ -22,6 +22,7 @@ class ModelAttribute<T extends Model?> extends Attribute<T> {
 
   @override
   T getDefaultValue() => dvalue?.clone() as T;
+
   @override
   T get cvalue => value?.clone() as T;
 }

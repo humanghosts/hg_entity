@@ -11,11 +11,11 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   static const fullPathKey = "full_path";
 
   /// 上级
-  late Attribute<T?> parent;
+  late final Attribute<T?> parent;
   static const parentKey = "parent";
 
   /// 下级
-  late ListAttribute<T> children;
+  late final ListAttribute<T> children;
   static const childrenKey = "children";
 
   DataTreeModel() {
@@ -26,6 +26,49 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   }
 
   int get pathLength => 4;
+
+  /// 克隆的缓存，防止parent和children克隆的时候循环
+  static final Map<String, DataTreeModel> _cloneCache = {};
+
+  @override
+  DataTreeModel clone() {
+    DataTreeModel newModel = ConstructorCache.get(runtimeType);
+    String id = this.id.value;
+    _cloneCache[id] = newModel;
+    for (Attribute attr in attributes.list) {
+      String attrName = attr.name;
+      Attribute newAttr = newModel.attributes.get(attrName)!;
+      // 拷贝父事件
+      if (attr.name == parent.name) {
+        if (attr.isNull) continue;
+        String parentId = (attr.value as T).id.value;
+        if (_cloneCache.containsKey(parentId)) {
+          newAttr.value = _cloneCache[parentId];
+        } else {
+          newAttr.value = attr.cvalue;
+        }
+        continue;
+      }
+      // 拷贝子事件
+      if (attr.name == children.name) {
+        if (attr.isNull) continue;
+        List<T> children = this.children.value;
+        List<T> cloneChildren = children.map((e) {
+          String childId = e.id.value;
+          if (_cloneCache.containsKey(childId)) {
+            return _cloneCache[childId] as T;
+          } else {
+            return e.clone() as T;
+          }
+        }).toList();
+        newAttr.value = cloneChildren;
+        continue;
+      }
+      newAttr.value = attr.cvalue;
+    }
+
+    return newModel;
+  }
 }
 
 /// 实现了部分功能的DataTreeModel
@@ -36,25 +79,16 @@ abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeMo
   static const listenerKey = "data_tree_model";
 
   AdvancedDataTreeModel() {
-    parent = attributes.dataModelNullable<T?>(
-      name: DataTreeModel.parentKey,
-      title: "上级",
-      listenerMap: {
-        listenerKey: AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent),
-      },
-    );
-    children = attributes.dataTreeModelList<T>(
-      name: DataTreeModel.childrenKey,
-      title: "下级",
-      listenerMap: {
-        listenerKey: ListAttributeListener(
-          beforeAddValue: beforeAddChild,
-          afterAddValue: afterAddChild,
-          beforeSetValue: beforeSetChildren,
-          beforeRemoveValue: beforeRemoveChild,
-          afterRemoveValue: afterRemoveChild,
-        ),
-      },
+    parent.addListener(listenerKey, AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent));
+    children.addListener(
+      listenerKey,
+      ListAttributeListener(
+        beforeAddValue: beforeAddChild,
+        afterAddValue: afterAddChild,
+        beforeSetValue: beforeSetChildren,
+        beforeRemoveValue: beforeRemoveChild,
+        afterRemoveValue: afterRemoveChild,
+      ),
     );
   }
 
