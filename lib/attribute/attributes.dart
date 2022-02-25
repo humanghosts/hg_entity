@@ -33,18 +33,22 @@ class Attributes {
   final Map<String, Attribute> _attributeMap = {};
 
   /// 监听器
-  late final AttributesListener? listener;
+  final AttributesListener? listener;
 
   /// 模型
-  late final Model model;
+  final Model model;
 
+  /// 构造方法
   Attributes({this.listener, required this.model});
 
   /// 通过名称获取某个属性
   Attribute? get(String? name) => _attributeMap[name];
 
   /// 获取所有属性
-  List<Attribute> get list => _attributeMap.values.toList();
+  List<Attribute> get attributeList => _attributeMap.values.toList();
+
+  /// 以map形式获取所有属性
+  Map<String, Attribute> get attributeMap => _attributeMap;
 
   /// 任意字段
   Attribute<T> obj<T extends Object>({

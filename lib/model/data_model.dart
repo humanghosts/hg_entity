@@ -57,8 +57,7 @@ abstract class DataModel extends Model {
 
   @override
   DataModel clear({bool reset = false, bool clearBase = false}) {
-    super.clear();
-    for (Attribute attr in attributes.list) {
+    for (Attribute attr in attributes.attributeList) {
       if (!clearBase && basicAttributeList.contains(attr)) continue;
       attr.clear();
     }
@@ -68,12 +67,13 @@ abstract class DataModel extends Model {
   @override
   DataModel merge(Model model, {bool mergeBase = false}) {
     assert(runtimeType == model.runtimeType, "类型不一致，无法合并");
-    for (Attribute attr in attributes.list) {
+    for (Attribute attr in attributes.attributeList) {
       if (!mergeBase && basicAttributeList.contains(attr)) continue;
       Attribute? modelAttr = model.attributes.get(attr.name);
       if (null == modelAttr) continue;
       attr.value = modelAttr.value;
     }
+    state = model.state;
     return this;
   }
 }

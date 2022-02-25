@@ -8,12 +8,22 @@ class AttributeListener<T> {
   AttributeListener({this.beforeSetValue, this.afterSetValue});
 }
 
+typedef ListAttributeListenerBeforeChanged<T> = bool Function(int index, T value);
+typedef ListAttributeListenerAfterChanged<T> = void Function(int index, T value);
+
 /// 列表属性监听器
 class ListAttributeListener<T> extends AttributeListener<List<T>> {
-  bool Function(int index, T value)? beforeAddValue;
-  void Function(int index, T value)? afterAddValue;
-  bool Function(T value)? beforeRemoveValue;
-  void Function(T value)? afterRemoveValue;
+  /// 添加元素
+  ListAttributeListenerBeforeChanged<T>? beforeAddValue;
+  ListAttributeListenerAfterChanged<T>? afterAddValue;
+
+  /// 删除元素
+  ListAttributeListenerBeforeChanged<T>? beforeRemoveValue;
+  ListAttributeListenerAfterChanged<T>? afterRemoveValue;
+
+  /// 设置指定位置元素
+  ListAttributeListenerBeforeChanged<T>? beforeSetIndexValue;
+  ListAttributeListenerAfterChanged<T>? afterSetIndexValue;
 
   ListAttributeListener({
     bool Function(List<T> value)? beforeSetValue,
@@ -22,18 +32,22 @@ class ListAttributeListener<T> extends AttributeListener<List<T>> {
     this.afterAddValue,
     this.beforeRemoveValue,
     this.afterRemoveValue,
+    this.beforeSetIndexValue,
+    this.afterSetIndexValue,
   }) : super(beforeSetValue: beforeSetValue, afterSetValue: afterSetValue);
 }
 
 /// 属性集合监听器
 class AttributesListener {
   void Function(Attribute attribute, Object? oldValue, Object? newValue)? onAttributeValueChange;
-  void Function(Attribute attribute, int index, Object value)? onListAttributeValueAdd;
-  void Function(Attribute attribute, Object value)? onListAttributeValueRemove;
+  void Function(Attribute attribute, int index, Object? value)? onListAttributeValueAdd;
+  void Function(Attribute attribute, int index, Object? value)? onListAttributeValueSet;
+  void Function(Attribute attribute, int index, Object? value)? onListAttributeValueRemove;
 
   AttributesListener({
     this.onAttributeValueChange,
     this.onListAttributeValueAdd,
     this.onListAttributeValueRemove,
+    this.onListAttributeValueSet,
   });
 }

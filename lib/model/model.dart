@@ -1,50 +1,57 @@
 import 'package:hg_entity/hg_entity.dart';
 
+/// 模型
 abstract class Model {
+  /// 模型属性
   late final Attributes attributes;
+
+  /// 模型状态
   States state = States.none;
+
+  /// 修改过值的属性
+  final Set<String> changedAttribute = {};
 
   Model() {
     AttributesListener listener = AttributesListener(
       onAttributeValueChange: onAttributeValueChange,
       onListAttributeValueAdd: onListAttributeValueAdd,
       onListAttributeValueRemove: onListAttributeValueRemove,
+      onListAttributeValueSet: onListAttributeValueSet,
     );
     attributes = Attributes(listener: listener, model: this);
   }
 
-  void _changeState() {
-    States oldModelState = state;
-    if (oldModelState == States.query) {
-      state = States.update;
-    }
-    if (oldModelState == States.none) {
-      state = States.insert;
-    }
-  }
-
+  /// 监听模型属性更改并更改模型状态
   void onAttributeValueChange(Attribute attribute, Object? oldValue, Object? newValue) {
-    _changeState();
+    changedAttribute.add(attribute.name);
   }
 
-  void onListAttributeValueAdd(Attribute attribute, int index, Object value) {
-    _changeState();
+  /// 监听模型属性更改并更改模型状态
+  void onListAttributeValueAdd(Attribute attribute, int index, Object? value) {
+    changedAttribute.add(attribute.name);
   }
 
-  void onListAttributeValueRemove(Attribute attribute, Object value) {
-    _changeState();
+  /// 监听模型属性更改并更改模型状态
+  void onListAttributeValueRemove(Attribute attribute, int index, Object? value) {
+    changedAttribute.add(attribute.name);
   }
 
-  Model clear() {
-    state = States.none;
-    return this;
+  /// 监听模型属性更改并更改模型状态
+  void onListAttributeValueSet(Attribute attribute, int index, Object? value) {
+    changedAttribute.add(attribute.name);
   }
 
+  /// 清空模型
+  Model clear();
+
+  /// 合并模型
   Model merge(Model model);
 
+  /// 复制模型
   Model clone() {
     Model newModel = ConstructorCache.get(runtimeType);
-    for (Attribute attr in attributes.list) {
+    newModel.state = state;
+    for (Attribute attr in attributes.attributeList) {
       String attrName = attr.name;
       Attribute newAttr = newModel.attributes.get(attrName)!;
       newAttr.value = attr.cvalue;

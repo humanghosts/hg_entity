@@ -33,9 +33,10 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   @override
   DataTreeModel clone() {
     DataTreeModel newModel = ConstructorCache.get(runtimeType);
+    newModel.state = state;
     String id = this.id.value;
     _cloneCache[id] = newModel;
-    for (Attribute attr in attributes.list) {
+    for (Attribute attr in attributes.attributeList) {
       String attrName = attr.name;
       Attribute newAttr = newModel.attributes.get(attrName)!;
       // 拷贝父事件
@@ -88,6 +89,8 @@ abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeMo
         beforeSetValue: beforeSetChildren,
         beforeRemoveValue: beforeRemoveChild,
         afterRemoveValue: afterRemoveChild,
+        beforeSetIndexValue: beforeAddChild,
+        afterSetIndexValue: afterAddChild,
       ),
     );
   }
@@ -95,6 +98,8 @@ abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeMo
   T? getChild(String? id) {
     return childrenMap[id];
   }
+
+  String get fullPathDivider => "|";
 
   /// 处理设置parent前 数据合法性校验，以及清空原本上级的中的自己
   bool beforeSetParent(T? parentValue) {
@@ -132,8 +137,8 @@ abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeMo
     if (parentValue == null) {
       fullPath.value = path.value;
     } else {
-      fullPath.value = "${parentValue.fullPath.value}|${path.value}";
-      parentValue.children.append(this);
+      fullPath.value = "${parentValue.fullPath.value}$fullPathDivider${path.value}";
+      parentValue.children.add(this);
     }
     // 如果当前节点有子节点
     updateChildFullPath(this);
@@ -147,7 +152,7 @@ abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeMo
     }
     for (int i = 0; i < children.length; i++) {
       DataTreeModel child = children[i] as DataTreeModel;
-      child.fullPath.value = "${current.fullPath.value}|${child.path.value}";
+      child.fullPath.value = "${current.fullPath.value}$fullPathDivider${child.path.value}";
       updateChildFullPath(child);
     }
   }
@@ -171,18 +176,18 @@ abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeMo
   }
 
   bool beforeSetChildren(List<T> children) {
-    this.children.appendAll(children);
+    this.children.addAll(children);
     return false;
   }
 
-  bool beforeRemoveChild(T child) {
+  bool beforeRemoveChild(int index, T child) {
     if (!childrenMap.containsKey(child.id.value)) {
       return false;
     }
     return true;
   }
 
-  void afterRemoveChild(T child) {
+  void afterRemoveChild(int index, T child) {
     childrenMap.remove(child.id.value);
     // 这里会出发一次child的setParent，在beforeSetParent里面会进行校验
     // 会再次回到beforeRemoveChild,判断map里面已经没有了，就会结束循环
