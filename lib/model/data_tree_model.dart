@@ -31,7 +31,8 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   static final Map<String, DataTreeModel> _cloneCache = {};
 
   @override
-  DataTreeModel clone() {
+  DataTreeModel clone({bool isRoot = true}) {
+    if (isRoot) _cloneCache.clear();
     DataTreeModel newModel = ConstructorCache.get(runtimeType);
     newModel.state = state;
     String id = this.id.value;
@@ -42,11 +43,12 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
       // 拷贝父事件
       if (attr.name == parent.name) {
         if (attr.isNull) continue;
-        String parentId = (attr.value as T).id.value;
+        T parentModel = attr.value as T;
+        String parentId = parentModel.id.value;
         if (_cloneCache.containsKey(parentId)) {
           newAttr.value = _cloneCache[parentId];
         } else {
-          newAttr.value = attr.cvalue;
+          newAttr.value = (parentModel as DataTreeModel).clone(isRoot: false);
         }
         continue;
       }
@@ -59,7 +61,7 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
           if (_cloneCache.containsKey(childId)) {
             return _cloneCache[childId] as T;
           } else {
-            return e.clone() as T;
+            return (e as DataTreeModel).clone(isRoot: false) as T;
           }
         }).toList();
         newAttr.value = cloneChildren;

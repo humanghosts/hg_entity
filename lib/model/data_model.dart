@@ -56,19 +56,20 @@ abstract class DataModel extends Model {
   IDGenerator get idGenerator => UUIDGenerator.instance;
 
   @override
-  DataModel clear({bool reset = false, bool clearBase = false}) {
+  DataModel clear({bool reset = false, bool clearBase = false, bool Function(Attribute attr)? isClear}) {
     for (Attribute attr in attributes.attributeList) {
       if (!clearBase && basicAttributeList.contains(attr)) continue;
-      attr.clear();
+      if (isClear?.call(attr) ?? true) attr.clear();
     }
     return this;
   }
 
   @override
-  DataModel merge(Model model, {bool mergeBase = false}) {
+  DataModel merge(Model model, {bool mergeBase = false, bool Function(Attribute attr)? isClone}) {
     assert(runtimeType == model.runtimeType, "类型不一致，无法合并");
     for (Attribute attr in attributes.attributeList) {
       if (!mergeBase && basicAttributeList.contains(attr)) continue;
+      if (!(isClone?.call(attr) ?? true)) continue;
       Attribute? modelAttr = model.attributes.get(attr.name);
       if (null == modelAttr) continue;
       attr.value = modelAttr.value;
