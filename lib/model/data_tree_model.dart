@@ -28,49 +28,48 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   int get pathLength => 4;
 
   /// 克隆的缓存，防止parent和children克隆的时候循环
-  static final Map<String, DataTreeModel> _cloneCache = {};
+  static final Map<String, DataTreeModel> cloneCache = {};
 
   @override
-  DataTreeModel clone({bool isRoot = true}) {
-    if (isRoot) _cloneCache.clear();
-    DataTreeModel newModel = ConstructorCache.get(runtimeType);
-    newModel.state = state;
+  DataTreeModel clone({Map<String, AttributeCloneHandler>? attributeHandler, Model? newModel, bool isRoot = true}) {
+    if (isRoot) cloneCache.clear();
+    DataTreeModel cloneModel = (newModel as DataTreeModel?) ?? ConstructorCache.get(runtimeType);
+    cloneModel.state = state;
     String id = this.id.value;
-    _cloneCache[id] = newModel;
-    for (Attribute attr in attributes.attributeList) {
-      String attrName = attr.name;
-      Attribute newAttr = newModel.attributes.get(attrName)!;
-      // 拷贝父事件
-      if (attr.name == parent.name) {
-        if (attr.isNull) continue;
-        T parentModel = attr.value as T;
-        String parentId = parentModel.id.value;
-        if (_cloneCache.containsKey(parentId)) {
-          newAttr.value = _cloneCache[parentId];
-        } else {
-          newAttr.value = (parentModel as DataTreeModel).clone(isRoot: false);
-        }
-        continue;
-      }
-      // 拷贝子事件
-      if (attr.name == children.name) {
-        if (attr.isNull) continue;
-        List<T> children = this.children.value;
-        List<T> cloneChildren = children.map((e) {
-          String childId = e.id.value;
-          if (_cloneCache.containsKey(childId)) {
-            return _cloneCache[childId] as T;
-          } else {
-            return (e as DataTreeModel).clone(isRoot: false) as T;
-          }
-        }).toList();
-        newAttr.value = cloneChildren;
-        continue;
-      }
-      newAttr.value = attr.cvalue;
-    }
+    cloneCache[id] = cloneModel;
+    Map<String, AttributeCloneHandler> allHandler = {
+      parent.name: parentCloneHandler,
+      children.name: childrenCloneHandler,
+    };
+    if (null != attributeHandler) allHandler.addAll(attributeHandler);
+    return super.clone(attributeHandler: allHandler, newModel: cloneModel) as DataTreeModel;
+  }
 
-    return newModel;
+  /// 父事件拷贝处理器
+  void parentCloneHandler(Attribute attribute, Attribute newAttribute) {
+    if (attribute.isNull) return;
+    T parentModel = attribute.value as T;
+    String parentId = parentModel.id.value;
+    if (cloneCache.containsKey(parentId)) {
+      newAttribute.value = cloneCache[parentId];
+    } else {
+      newAttribute.value = (parentModel as DataTreeModel).clone(isRoot: false);
+    }
+  }
+
+  /// 子事件拷贝处理器
+  void childrenCloneHandler(Attribute attribute, Attribute newAttribute) {
+    if (attribute.isNull) return;
+    List<T> children = this.children.value;
+    List<T> cloneChildren = children.map((e) {
+      String childId = e.id.value;
+      if (cloneCache.containsKey(childId)) {
+        return cloneCache[childId] as T;
+      } else {
+        return (e as DataTreeModel).clone(isRoot: false) as T;
+      }
+    }).toList();
+    newAttribute.value = cloneChildren;
   }
 }
 

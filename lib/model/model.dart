@@ -1,5 +1,7 @@
 import 'package:hg_entity/hg_entity.dart';
 
+typedef AttributeCloneHandler = void Function(Attribute attribute, Attribute newAttribute);
+
 /// 模型
 abstract class Model {
   /// 模型属性
@@ -48,14 +50,21 @@ abstract class Model {
   Model merge(Model model);
 
   /// 复制模型
-  Model clone() {
-    Model newModel = ConstructorCache.get(runtimeType);
-    newModel.state = state;
+  /// [attributeHandler]是处理属性复制的方法
+  /// [newModel]是复制的目标model，没有目标model的化会新建一个
+  Model clone({Map<String, AttributeCloneHandler>? attributeHandler, Model? newModel}) {
+    Model cloneModel = newModel ?? ConstructorCache.get(runtimeType);
+    cloneModel.state = state;
     for (Attribute attr in attributes.attributeList) {
       String attrName = attr.name;
-      Attribute newAttr = newModel.attributes.get(attrName)!;
+      Attribute newAttr = cloneModel.attributes.get(attrName)!;
+      if (attributeHandler?.containsKey(attrName) ?? false) {
+        AttributeCloneHandler handler = attributeHandler![attrName]!;
+        handler(attr, newAttr);
+        continue;
+      }
       newAttr.value = attr.cvalue;
     }
-    return newModel;
+    return cloneModel;
   }
 }
