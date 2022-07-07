@@ -22,4 +22,16 @@ abstract class SimpleModel extends Model {
     state = model.state;
     return this;
   }
+
+  @override
+  String toString() {
+    Map<String, String> stringList = {};
+    for (Attribute attr in attributes.attributeList) {
+      dynamic value = attr.value;
+      if (null == value) continue;
+      stringList[attr.title] = value.toString();
+    }
+    if (stringList.isEmpty) return "";
+    return stringList.toString();
+  }
 }

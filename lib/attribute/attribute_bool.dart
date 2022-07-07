@@ -19,6 +19,14 @@ class BooleanAttribute<T extends bool?> extends Attribute<T> {
           dvalue: dvalue,
           listenerMap: listenerMap,
         );
+
+  @override
+  String toString() {
+    if (value == null) return "";
+    if (value == true) return "是";
+    if (value == false) return "否";
+    return value.toString();
+  }
 }
 
 class BooleanListAttribute<T extends bool> extends ListAttribute<T> {
@@ -39,4 +47,14 @@ class BooleanListAttribute<T extends bool> extends ListAttribute<T> {
           dvalue: dvalue,
           listenerMap: listenerMap,
         );
+
+  @override
+  String toString() {
+    if (value.isEmpty) return "";
+    return value.map((e) {
+      if (e == true) return "是";
+      if (e == false) return "否";
+      return e.toString();
+    }).join(",");
+  }
 }

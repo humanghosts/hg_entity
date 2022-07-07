@@ -156,13 +156,7 @@ class Attribute<T> {
 
   @override
   String toString() {
-    return {
-      "name": name,
-      "value": value,
-      "title": title,
-      "comment": comment,
-      "type": type,
-      "dvalue": dvalue,
-    }.toString();
+    if (value == null) return "";
+    return value.toString();
   }
 }

@@ -77,4 +77,9 @@ abstract class DataModel extends Model {
     state = model.state;
     return this;
   }
+
+  @override
+  String toString() {
+    return id.value;
+  }
 }

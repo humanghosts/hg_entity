@@ -264,4 +264,10 @@ class ListAttribute<T> extends Attribute<List<T>> {
 
   /// 随机打乱列表元素
   void shuffle([Random? random]) => value.shuffle(random);
+
+  @override
+  String toString() {
+    if (value.isEmpty) return "";
+    return value.map((e) => e.toString()).join(",");
+  }
 }
