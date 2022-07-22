@@ -9,7 +9,7 @@ class ConstructorCache {
   static final Map<String, Type> _typeCache = {};
 
   /// 注册缓存,Type最好不要带？
-  static void put(Type type, Object Function([Map<String, dynamic>? args]) constructor) {
+  static void put(Type type, Object Function([Map<String, dynamic>? args]) constructor, {List<String> alias = const []}) {
     String typeStr = type.toString();
     String realTypeStr;
     if (type.toString().endsWith("?")) {
@@ -22,6 +22,10 @@ class ConstructorCache {
     _cache[realTypeStrNullable] = constructor;
     _typeCache[realTypeStr] = type;
     _typeCache[realTypeStrNullable] = type;
+    for (String alia in alias) {
+      _cache[alia] = constructor;
+      _typeCache[alia] = type;
+    }
   }
 
   /// 通过类型字符串获取类型
