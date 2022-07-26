@@ -18,7 +18,21 @@ abstract class DataTreeModel<T extends DataModel> extends DataModel {
   late final ListAttribute<T> children;
   static const childrenKey = "children";
 
-  DataTreeModel() {
+  DataTreeModel({
+    String? id,
+    DateTime? createTime,
+    bool? isDelete,
+    DateTime? deleteTime,
+    DateTime? timestamp,
+    String? version,
+  }) : super(
+          id: id,
+          createTime: createTime,
+          isDelete: isDelete,
+          deleteTime: deleteTime,
+          timestamp: timestamp,
+          version: version,
+        ) {
     path = attributes.string(name: pathKey, title: "路径", dvalue: PathUtil.genPath(length: pathLength));
     fullPath = attributes.string(name: fullPathKey, title: "绝对路径", dvalue: path.value);
     parent = attributes.dataModelNullable<T?>(name: parentKey, title: "上级");
@@ -80,7 +94,21 @@ abstract class AdvancedDataTreeModel<T extends DataTreeModel> extends DataTreeMo
   /// 监听器key
   static const listenerKey = "data_tree_model";
 
-  AdvancedDataTreeModel() {
+  AdvancedDataTreeModel({
+    String? id,
+    DateTime? createTime,
+    bool? isDelete,
+    DateTime? deleteTime,
+    DateTime? timestamp,
+    String? version,
+  }) : super(
+          id: id,
+          createTime: createTime,
+          isDelete: isDelete,
+          deleteTime: deleteTime,
+          timestamp: timestamp,
+          version: version,
+        ) {
     parent.addListener(listenerKey, AttributeListener(beforeSetValue: beforeSetParent, afterSetValue: afterSetParent));
     children.addListener(
       listenerKey,
